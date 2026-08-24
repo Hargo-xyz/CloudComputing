@@ -1,0 +1,1774 @@
+﻿<!doctype html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Cloud Computing - Global Server Network</title>
+  <!-- AOS Library CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- [OPTIMASI: Untuk Produksi, ganti CDN ini dengan file style.css hasil build Tailwind] -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Three.js & Globe Libraries -->
+  <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://unpkg.com/three-globe@2.30.0/dist/three-globe.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="globe.css" />
+  <!-- 1. GSAP Core Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- 2. GSAP ScrollTrigger Plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- 3. SplitType Library -->
+  <script src="https://unpkg.com/split-type"></script>
+
+  <!-- [OPTIMASI: Matikan Glow SVG di HP via CSS] -->
+  <style>
+    .will-change-transform {
+      will-change: transform, opacity, filter, stroke-dashoffset;
+    }
+
+    .reveal-wrapper {
+      overflow: hidden;
+      display: inline-block;
+      padding-bottom: 0.1em;
+      margin-bottom: -0.1em;
+    }
+
+    .text-stroke-watermark {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(255, 255, 255, 0.04);
+    }
+
+    .bg-grid-premium {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+    }
+
+    /* Filter & Glow HANYA aktif di Desktop (min-width: 768px) */
+    @media (min-width: 768px) {
+      .glow-blue {
+        filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
+      }
+
+      .glow-cyan {
+        filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.8));
+      }
+
+      .glow-indigo {
+        filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.8));
+      }
+
+      .glow-emerald {
+        filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.8));
+      }
+
+      .glow-purple {
+        filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.8));
+      }
+    }
+  </style>
+</head>
+
+<body
+  class="antialiased selection:bg-blue-500 selection:text-white bg-[#050811] text-slate-100 overflow-x-hidden font-inter">
+
+  <!-- [OPTIMASI: Matikan 3D Globe di HP & Ganti dengan Gradien] -->
+  <!-- <div id="canvas-container" class="hidden md:block fixed inset-0 z-0 pointer-events-none"></div>
+  <div class="block md:hidden fixed inset-0 z-0 bg-gradient-to-b from-[#050811] to-[#0a1128] pointer-events-none"></div> -->
+  <div id="canvas-container" class="fixed inset-0 z-0 pointer-events-none"></div>
+
+  <!-- ==========================================
+         HERO SECTION / UI LAYER
+    ========================================== -->
+  <div class="ui-layer min-h-screen flex flex-col justify-between relative z-10">
+    <!-- HEADER / NAVBAR -->
+    <!-- [OPTIMASI: Matikan backdrop-blur di HP, ganti dengan warna solid] -->
+    <header
+      class="animate-nav w-[92%] max-w-5xl mx-auto mt-6 px-6 py-4 flex justify-between items-center rounded-2xl bg-[#0a1128] md:bg-white/[0.03] md:backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.2)] relative interactive transition-all duration-300 hover:bg-white/[0.05]">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 group">
+        <svg
+          class="w-7 h-7 text-blue-500 transition-transform duration-500 ease-out group-hover:-rotate-12 group-hover:scale-110"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+        </svg>
+        <span class="font-display font-bold text-xl tracking-tight text-white">
+          Cloud<span class="text-blue-500">Computing</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#apa-itu-cloud"
+          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
+          Pengertian
+        </a>
+        <a href="#materi"
+          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
+          Mitra
+        </a>
+        <a href="#komparasi"
+          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
+          Evolusi
+        </a>
+        <a href="#layanan"
+          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
+          Model Layanan
+        </a>
+      </nav>
+    </header>
+
+    <!-- MAIN HERO CONTENT -->
+    <main class="w-full max-w-4xl mx-auto px-6 text-center my-auto py-12 flex flex-col items-center justify-center">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs font-medium text-blue-300 mb-6 border border-blue-500/30 interactive">
+        <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+        Global Server Network Online
+      </div>
+
+      <div class="relative inline-block mb-8 interactive" id="focus-container">
+        <div id="focus-box" class="focus-bracket opacity-0">
+          <div class="corner top-left"></div>
+          <div class="corner top-right"></div>
+          <div class="corner bottom-left"></div>
+          <div class="corner bottom-right"></div>
+        </div>
+
+        <h1 class="relative z-10 font-display font-bold text-5xl sm:text-8xl tracking-tight text-white select-none">
+          <span class="focus-target inline-block px-2"> Cloud </span>
+          <span id="judul" class="focus-target text-blue-500 inline-block px-2">
+            Computing
+          </span>
+        </h1>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center gap-4 interactive">
+        <a href="#materi"
+          class="glass-panel w-full sm:w-auto text-gray-200 hover:text-white font-semibold px-8 py-3.5 rounded-lg text-sm transition-all duration-300 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] bg-[#0b1329] md:bg-transparent">
+          Get Started
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <section id="materi"
+    class="relative z-10 w-full py-16 border-y border-white/5 bg-[#050811] md:bg-[#050811]/70 md:backdrop-blur-md overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 mb-10 text-center">
+      <p class="text-sm font-semibold text-blue-400 tracking-widest uppercase">
+        Dipercaya & Digunakan Raksasa Digital Dunia
+      </p>
+    </div>
+    <div
+      class="relative flex flex-col gap-6 opacity-90 hover:opacity-100 transition-opacity duration-500 select-none overflow-hidden">
+      <!-- Baris Tunggal: Geser ke Kanan (Infinite Loop) -->
+      <div class="flex w-full overflow-hidden whitespace-nowrap">
+        <div class="flex w-max animate-marquee-reverse space-x-16 items-center">
+          <!-- Grup Utama (Super Diperbanyak) -->
+          <div class="flex space-x-16 items-center shrink-0">
+            <!-- Google Cloud -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlecloud.svg" class="w-8 h-8" style="
+                    filter: invert(62%) sepia(48%) saturate(5425%)
+                      hue-rotate(184deg) brightness(99%) contrast(98%);
+                  " alt="Google Cloud" />
+              <span class="text-2xl font-display font-bold text-[#4285F4] tracking-wide">Google Cloud</span>
+            </div>
+            <!-- Netflix -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/netflix.svg" class="w-8 h-8" style="
+                    filter: invert(20%) sepia(91%) saturate(7493%)
+                      hue-rotate(356deg) brightness(98%) contrast(115%);
+                  " alt="Netflix" />
+              <span class="text-2xl font-display font-black tracking-widest text-[#E50914]">NETFLIX</span>
+            </div>
+            <!-- YouTube -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/youtube.svg" class="w-8 h-8" style="
+                    filter: invert(16%) sepia(94%) saturate(6295%)
+                      hue-rotate(356deg) brightness(95%) contrast(116%);
+                  " alt="YouTube" />
+              <span class="text-2xl font-display font-bold text-[#FF0000]">YouTube</span>
+            </div>
+            <!-- Meta -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/meta.svg" class="w-8 h-8" style="
+                    filter: invert(41%) sepia(85%) saturate(2204%)
+                      hue-rotate(196deg) brightness(98%) contrast(101%);
+                  " alt="Meta" />
+              <span class="text-2xl font-display font-bold text-[#0081FB]">Meta</span>
+            </div>
+            <!-- Spotify -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/spotify.svg" class="w-8 h-8" style="
+                    filter: invert(69%) sepia(74%) saturate(464%)
+                      hue-rotate(85deg) brightness(99%) contrast(98%);
+                  " alt="Spotify" />
+              <span class="text-2xl font-display font-bold text-[#1DB954]">Spotify</span>
+            </div>
+            <!-- Discord -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/discord.svg" class="w-8 h-8" style="
+                    filter: invert(45%) sepia(61%) saturate(3475%)
+                      hue-rotate(222deg) brightness(98%) contrast(96%);
+                  " alt="Discord" />
+              <span class="text-2xl font-display font-bold text-[#5865F2]">Discord</span>
+            </div>
+            <!-- Twitch -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/twitch.svg" class="w-8 h-8" style="
+                    filter: invert(30%) sepia(93%) saturate(3544%)
+                      hue-rotate(258deg) brightness(93%) contrast(98%);
+                  " alt="Twitch" />
+              <span class="text-2xl font-display font-bold text-[#9146FF]">Twitch</span>
+            </div>
+            <!-- Adobe -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/adobe.svg" class="w-8 h-8" style="
+                    filter: invert(16%) sepia(94%) saturate(6295%)
+                      hue-rotate(356deg) brightness(95%) contrast(116%);
+                  " alt="Adobe" />
+              <span class="text-2xl font-display font-bold text-[#FF0000]">Adobe</span>
+            </div>
+            <!-- Apple -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg" class="w-8 h-8 filter invert"
+                alt="Apple" />
+              <span class="text-2xl font-display font-bold text-white">Apple</span>
+            </div>
+            <!-- Zoom -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/zoom.svg" class="w-8 h-8" style="
+                    filter: invert(32%) sepia(94%) saturate(1914%)
+                      hue-rotate(188deg) brightness(95%) contrast(101%);
+                  " alt="Zoom" />
+              <span class="text-2xl font-display font-bold text-[#2D8CFF]">Zoom</span>
+            </div>
+            <!-- GitHub -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" class="w-8 h-8 filter invert"
+                alt="GitHub" />
+              <span class="text-2xl font-display font-bold text-white">GitHub</span>
+            </div>
+          </div>
+
+          <!-- Grup Duplikat Persis untuk Sambungan Mulus (Infinite Loop) -->
+          <div class="flex space-x-16 items-center shrink-0">
+            <!-- Google Cloud -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlecloud.svg" class="w-8 h-8" style="
+                    filter: invert(62%) sepia(48%) saturate(5425%)
+                      hue-rotate(184deg) brightness(99%) contrast(98%);
+                  " alt="Google Cloud" />
+              <span class="text-2xl font-display font-bold text-[#4285F4] tracking-wide">Google Cloud</span>
+            </div>
+            <!-- Netflix -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/netflix.svg" class="w-8 h-8" style="
+                    filter: invert(20%) sepia(91%) saturate(7493%)
+                      hue-rotate(356deg) brightness(98%) contrast(115%);
+                  " alt="Netflix" />
+              <span class="text-2xl font-display font-black tracking-widest text-[#E50914]">NETFLIX</span>
+            </div>
+            <!-- YouTube -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/youtube.svg" class="w-8 h-8" style="
+                    filter: invert(16%) sepia(94%) saturate(6295%)
+                      hue-rotate(356deg) brightness(95%) contrast(116%);
+                  " alt="YouTube" />
+              <span class="text-2xl font-display font-bold text-[#FF0000]">YouTube</span>
+            </div>
+            <!-- Meta -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/meta.svg" class="w-8 h-8" style="
+                    filter: invert(41%) sepia(85%) saturate(2204%)
+                      hue-rotate(196deg) brightness(98%) contrast(101%);
+                  " alt="Meta" />
+              <span class="text-2xl font-display font-bold text-[#0081FB]">Meta</span>
+            </div>
+            <!-- Spotify -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/spotify.svg" class="w-8 h-8" style="
+                    filter: invert(69%) sepia(74%) saturate(464%)
+                      hue-rotate(85deg) brightness(99%) contrast(98%);
+                  " alt="Spotify" />
+              <span class="text-2xl font-display font-bold text-[#1DB954]">Spotify</span>
+            </div>
+            <!-- Discord -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/discord.svg" class="w-8 h-8" style="
+                    filter: invert(45%) sepia(61%) saturate(3475%)
+                      hue-rotate(222deg) brightness(98%) contrast(96%);
+                  " alt="Discord" />
+              <span class="text-2xl font-display font-bold text-[#5865F2]">Discord</span>
+            </div>
+            <!-- Twitch -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/twitch.svg" class="w-8 h-8" style="
+                    filter: invert(30%) sepia(93%) saturate(3544%)
+                      hue-rotate(258deg) brightness(93%) contrast(98%);
+                  " alt="Twitch" />
+              <span class="text-2xl font-display font-bold text-[#9146FF]">Twitch</span>
+            </div>
+            <!-- Adobe -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/adobe.svg" class="w-8 h-8" style="
+                    filter: invert(16%) sepia(94%) saturate(6295%)
+                      hue-rotate(356deg) brightness(95%) contrast(116%);
+                  " alt="Adobe" />
+              <span class="text-2xl font-display font-bold text-[#FF0000]">Adobe</span>
+            </div>
+            <!-- Apple -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg" class="w-8 h-8 filter invert"
+                alt="Apple" />
+              <span class="text-2xl font-display font-bold text-white">Apple</span>
+            </div>
+            <!-- Zoom -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/zoom.svg" class="w-8 h-8" style="
+                    filter: invert(32%) sepia(94%) saturate(1914%)
+                      hue-rotate(188deg) brightness(95%) contrast(101%);
+                  " alt="Zoom" />
+              <span class="text-2xl font-display font-bold text-[#2D8CFF]">Zoom</span>
+            </div>
+            <!-- GitHub -->
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" class="w-8 h-8 filter invert"
+                alt="GitHub" />
+              <span class="text-2xl font-display font-bold text-white">GitHub</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRAPPER UTAMA (Wajib ada agar sticky punya ruang scroll) -->
+  <div class="relative w-full bg-[#070a12]">
+
+    <!-- ==========================================
+        SECTION 1: APA ITU CLOUD COMPUTING? (STICKY LAYER)
+  ========================================== -->
+    <section id="apa-itu-cloud"
+      class="sticky top-0 h-screen w-full bg-[#070a12] z-10 border-t border-white/[0.06] flex items-center justify-center">
+
+      <!-- Background Ambient -->
+      <div class="absolute inset-0 z-0 pointer-events-none opacity-40">
+        <div
+          class="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]">
+        </div>
+      </div>
+
+      <style>
+        /* 3D Scene Setup */
+        .scene-container {
+          width: 100%;
+          height: 380px;
+          perspective: 1000px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .rack-assembly {
+          position: relative;
+          transform-style: preserve-3d;
+          transform: rotateX(16deg) rotateY(-28deg);
+          animation: float-rack 7s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+        }
+
+        @keyframes float-rack {
+          0% {
+            transform: rotateX(16deg) rotateY(-28deg) translateY(0px);
+          }
+
+          100% {
+            transform: rotateX(19deg) rotateY(-22deg) translateY(-14px);
+          }
+        }
+
+        .face {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          box-sizing: border-box;
+          backface-visibility: hidden;
+        }
+
+        .server-unit {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform-style: preserve-3d;
+          opacity: 0;
+          transform: translateY(-80px) translateZ(-50px) scale(0.92);
+          transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.4s ease-out;
+        }
+
+        .s-front {
+          width: 270px;
+          height: 50px;
+          transform: translate(-50%, -50%) translateZ(95px);
+          background: #0d1322;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 18px;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 20px 30px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        .s-top {
+          width: 270px;
+          height: 190px;
+          transform: translate(-50%, -50%) rotateX(90deg) translateZ(25px);
+          background: #111827;
+          border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .s-bottom {
+          width: 270px;
+          height: 190px;
+          transform: translate(-50%, -50%) rotateX(-90deg) translateZ(25px);
+          background: #060911;
+        }
+
+        .s-left {
+          width: 190px;
+          height: 50px;
+          transform: translate(-50%, -50%) rotateY(-90deg) translateZ(135px);
+          background: #090e1a;
+        }
+
+        .s-right {
+          width: 190px;
+          height: 50px;
+          transform: translate(-50%, -50%) rotateY(90deg) translateZ(135px);
+          background: #090e1a;
+        }
+
+        .s-back {
+          width: 270px;
+          height: 50px;
+          transform: translate(-50%, -50%) rotateY(180deg) translateZ(95px);
+          background: #060911;
+        }
+
+        .indicator-bar {
+          width: 4px;
+          height: 18px;
+          border-radius: 2px;
+          background: #3b82f6;
+          box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+        }
+
+        .status-group {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .line-detail {
+          width: 90px;
+          height: 2px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 1px;
+        }
+
+        .status-dots {
+          display: flex;
+          gap: 6px;
+        }
+
+        .dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+        }
+
+        .dot-blue {
+          background: #3b82f6;
+          box-shadow: 0 0 6px #3b82f6;
+        }
+
+        .dot-emerald {
+          background: #10b981;
+          box-shadow: 0 0 6px #10b981;
+        }
+
+        .dot-pulse {
+          animation: soft-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes soft-pulse {
+
+          0%,
+          100% {
+            opacity: 0.3;
+          }
+
+          50% {
+            opacity: 1;
+          }
+        }
+
+        /* TRIGGER AOS ANIMATION */
+        [data-aos="stack-rack"].aos-animate .slot-1 {
+          transform: translateY(64px) translateZ(0) scale(1);
+          opacity: 1;
+          transition-delay: 0.2s;
+        }
+
+        [data-aos="stack-rack"].aos-animate .slot-2 {
+          transform: translateY(0px) translateZ(0) scale(1);
+          opacity: 1;
+          transition-delay: 0.5s;
+        }
+
+        [data-aos="stack-rack"].aos-animate .slot-3 {
+          transform: translateY(-64px) translateZ(0) scale(1);
+          opacity: 1;
+          transition-delay: 0.8s;
+        }
+
+        @media (max-width: 640px) {
+          .scene-container {
+            height: 300px;
+          }
+
+          .rack-assembly {
+            transform: scale(0.75) rotateX(16deg) rotateY(-28deg);
+          }
+        }
+      </style>
+
+      <div class="max-w-6xl mx-auto px-6 relative z-10 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <!-- Kiri: Text Content -->
+          <div class="space-y-6 text-center lg:text-left" data-aos="fade-up" data-aos-duration="800">
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono tracking-wider uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span>
+              Fundamental Architecture
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
+              Apa Itu <br class="hidden sm:block" />
+              <span class="text-blue-500">Cloud Computing?</span>
+            </h2>
+
+            <p class="text-slate-400 text-sm sm:text-base leading-relaxed font-normal">
+              Secara sederhana, <strong class="text-slate-200">cloud computing</strong> adalah layanan menyewa
+              infrastruktur komputasi (server, penyimpanan, basis data, dan jaringan) melalui internet secara fleksibel.
+            </p>
+
+            <p class="text-slate-400 text-sm sm:text-base leading-relaxed font-normal">
+              Tanpa perlu membeli atau merawat perangkat keras fisik yang mahal, Anda dapat menggunakan sumber daya TI
+              berskala global secara instan dengan model pembayaran sesuai penggunaan <em>(Pay-as-you-go)</em>.
+            </p>
+          </div>
+
+          <!-- Kanan: 3D Server Rack -->
+          <div class="w-full" data-aos="stack-rack" data-aos-duration="1000" data-aos-once="false">
+            <div class="scene-container">
+              <div class="rack-assembly">
+                <div class="server-unit slot-1">
+                  <div class="face s-top"></div>
+                  <div class="face s-bottom"></div>
+                  <div class="face s-left"></div>
+                  <div class="face s-right"></div>
+                  <div class="face s-back"></div>
+                  <div class="face s-front">
+                    <div class="indicator-bar"></div>
+                    <div class="status-group">
+                      <div class="line-detail"></div>
+                      <div class="status-dots">
+                        <div class="dot dot-blue"></div>
+                        <div class="dot dot-emerald dot-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="server-unit slot-2">
+                  <div class="face s-top"></div>
+                  <div class="face s-bottom"></div>
+                  <div class="face s-left"></div>
+                  <div class="face s-right"></div>
+                  <div class="face s-back"></div>
+                  <div class="face s-front">
+                    <div class="indicator-bar"
+                      style="background: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);"></div>
+                    <div class="status-group">
+                      <div class="line-detail"></div>
+                      <div class="status-dots">
+                        <div class="dot dot-emerald"></div>
+                        <div class="dot dot-blue dot-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="server-unit slot-3">
+                  <div class="face s-top"></div>
+                  <div class="face s-bottom"></div>
+                  <div class="face s-left"></div>
+                  <div class="face s-right"></div>
+                  <div class="face s-back"></div>
+                  <div class="face s-front">
+                    <div class="indicator-bar"></div>
+                    <div class="status-group">
+                      <div class="line-detail"></div>
+                      <div class="status-dots">
+                        <div class="dot dot-blue"></div>
+                        <div class="dot dot-blue dot-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+        SECTION 2: EVOLUSI (OVERLAPPING LAYER)
+  ========================================== -->
+    <section id="komparasi"
+      class="relative z-30 w-full bg-[#03050A] py-32 border-t border-blue-500/20 shadow-[0_-30px_60px_rgba(0,0,0,0.95)] rounded-t-[2.5rem] md:rounded-t-[4rem]">
+
+      <!-- Grid Background -->
+      <div
+        class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik02MCAwaC0xdjYwaDFWMHptLTYwIDYwaDYwdi0xSDB2MXoiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiIvPjwvZz48L3N2Zz4=')] opacity-50 z-0 pointer-events-none rounded-t-[2.5rem] md:rounded-t-[4rem]">
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+
+        <!-- HEADER -->
+        <div class="enterprise-header mb-24 md:mb-32">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="h-px w-12 bg-blue-500/80"></div>
+            <span class="font-mono text-[10px] sm:text-xs tracking-[0.25em] text-slate-400 uppercase">
+              Infrastructure Archive // Timeline
+            </span>
+          </div>
+          <h2 class="text-4xl sm:text-6xl font-display font-medium text-slate-100 tracking-tight leading-tight">
+            Evolusi Arsitektur.
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-6 max-w-2xl font-light leading-relaxed">
+            Transisi struktural dari pengelolaan *bare-metal* secara mandiri menuju elastisitas ekosistem komputasi awan
+            modern.
+          </p>
+        </div>
+
+        <!-- TIMELINE CONTAINER -->
+        <div class="relative">
+
+          <div class="absolute top-2 bottom-0 left-[15px] md:left-[220px] w-[1px] bg-white/[0.05]"></div>
+
+          <div id="tech-scroll-line"
+            class="absolute top-2 left-[15px] md:left-[220px] w-[1px] h-full bg-blue-500 origin-top scale-y-0 z-10 shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+          </div>
+
+          <div class="space-y-16 md:space-y-24 pb-12">
+
+            <!-- ITEM 01 -->
+            <div
+              class="tech-node group relative grid grid-cols-1 md:grid-cols-[200px_40px_1fr] gap-6 md:gap-0 items-start">
+              <div class="node-meta pl-12 md:pl-0 md:pr-10 md:text-right pt-0.5 relative z-20 md:mt-[2px]">
+                <span class="font-mono text-xs text-slate-500 block mb-1">EPOCH: 1990-2000</span>
+                <h3
+                  class="text-xl md:text-2xl font-medium text-slate-200 group-hover:text-white transition-colors duration-300">
+                  On-Premise</h3>
+              </div>
+
+              <div class="absolute left-0 md:relative md:flex justify-center z-20 mt-[6px]">
+                <div class="w-8 h-8 flex items-center justify-center bg-[#03050A]">
+                  <div
+                    class="node-dot w-2 h-2 rounded-none bg-slate-900 border border-slate-600 group-hover:border-blue-400 group-hover:bg-blue-500 transition-colors duration-500">
+                  </div>
+                </div>
+              </div>
+
+              <div class="node-content pl-12 md:pl-10">
+                <div
+                  class="bg-white/[0.01] border border-white/[0.05] p-6 sm:p-8 hover:bg-white/[0.02] hover:border-white/[0.1] transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
+                  <div
+                    class="flex items-center gap-3 font-mono text-[10px] text-slate-500 mb-5 uppercase tracking-widest">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 bg-red-500/80 rounded-full"></span> Status: Legacy
+                    </span>
+                    <span>|</span>
+                    <span>CapEx Heavy</span>
+                  </div>
+                  <p class="text-slate-400 text-sm leading-loose">
+                    Organisasi wajib melakukan pengadaan, instalasi, dan pemeliharaan server fisik (bare-metal) secara
+                    mandiri di fasilitas internal. Membutuhkan belanja modal yang masif dan waktu *deployment*
+                    berbulan-bulan.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 02 -->
+            <div
+              class="tech-node group relative grid grid-cols-1 md:grid-cols-[200px_40px_1fr] gap-6 md:gap-0 items-start">
+              <div class="node-meta pl-12 md:pl-0 md:pr-10 md:text-right pt-0.5 relative z-20 md:mt-[2px]">
+                <span class="font-mono text-xs text-slate-500 block mb-1">EPOCH: 2001-2010</span>
+                <h3
+                  class="text-xl md:text-2xl font-medium text-slate-200 group-hover:text-white transition-colors duration-300">
+                  Virtualization</h3>
+              </div>
+
+              <div class="absolute left-0 md:relative md:flex justify-center z-20 mt-[6px]">
+                <div class="w-8 h-8 flex items-center justify-center bg-[#03050A]">
+                  <div
+                    class="node-dot w-2 h-2 rounded-none bg-slate-900 border border-slate-600 group-hover:border-blue-400 group-hover:bg-blue-500 transition-colors duration-500">
+                  </div>
+                </div>
+              </div>
+
+              <div class="node-content pl-12 md:pl-10">
+                <div
+                  class="bg-white/[0.01] border border-white/[0.05] p-6 sm:p-8 hover:bg-white/[0.02] hover:border-white/[0.1] transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
+                  <div
+                    class="flex items-center gap-3 font-mono text-[10px] text-slate-500 mb-5 uppercase tracking-widest">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 bg-amber-500/80 rounded-full"></span> Status: Transition
+                    </span>
+                    <span>|</span>
+                    <span>Resource Optimized</span>
+                  </div>
+                  <p class="text-slate-400 text-sm leading-loose">
+                    Implementasi layer *Hypervisor* (seperti VMware/KVM) mengizinkan satu mesin fisik dipecah menjadi
+                    multiple Virtual Machines (VM). Utilisasi perangkat keras meningkat drastis, memangkas *footprint*
+                    fisik data center.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 03 -->
+            <div
+              class="tech-node group relative grid grid-cols-1 md:grid-cols-[200px_40px_1fr] gap-6 md:gap-0 items-start">
+              <div class="node-meta pl-12 md:pl-0 md:pr-10 md:text-right pt-0.5 relative z-20 md:mt-[2px]">
+                <span class="font-mono text-xs text-blue-500/80 block mb-1">EPOCH: PRESENT</span>
+                <h3 class="text-xl md:text-2xl font-medium text-white transition-colors duration-300">Cloud Computing
+                </h3>
+              </div>
+
+              <div class="absolute left-0 md:relative md:flex justify-center z-20 mt-[6px]">
+                <div class="w-8 h-8 flex items-center justify-center bg-[#03050A]">
+                  <div
+                    class="node-dot w-2 h-2 rounded-none bg-slate-900 border border-slate-600 group-hover:border-blue-400 group-hover:bg-blue-500 transition-colors duration-500">
+                  </div>
+                </div>
+              </div>
+
+              <div class="node-content pl-12 md:pl-10">
+                <div
+                  class="bg-blue-500/[0.02] border border-blue-500/[0.15] p-6 sm:p-8 hover:bg-blue-500/[0.04] hover:border-blue-500/30 transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
+                  <div
+                    class="flex items-center gap-3 font-mono text-[10px] text-blue-400 mb-5 uppercase tracking-widest">
+                    <span class="flex items-center gap-1.5">
+                      <span
+                        class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]"></span>
+                      Status: Active standard
+                    </span>
+                    <span>|</span>
+                    <span>OpEx / Elastic</span>
+                  </div>
+                  <p class="text-slate-300 text-sm leading-loose">
+                    Infrastruktur disediakan sebagai layanan (*Infrastructure as a Service*) melalui API. Kapasitas
+                    komputasi dapat di-skala (scale-up/down) secara otomatis dalam hitungan detik dengan model penagihan
+                    *pay-as-you-go*.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Header Reveal (Smooth fade & slide up)
+    gsap.from(".enterprise-header > *", {
+      scrollTrigger: {
+        trigger: "#komparasi",
+        start: "top 75%",
+      },
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power3.out"
+    });
+
+    // 2. Garis Timeline (Draw line halus ke bawah dengan shadow biru)
+    gsap.to("#tech-scroll-line", {
+      scaleY: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".space-y-16",
+        start: "top 60%",
+        end: "bottom 70%",
+        scrub: 0.5,
+      }
+    });
+
+    // 3. Staggered Technical Nodes (Elegan, tajam, tanpa efek mantul yang lebay)
+    const techNodes = gsap.utils.toArray('.tech-node');
+
+    techNodes.forEach((node) => {
+      const dot = node.querySelector('.node-dot');
+      const meta = node.querySelector('.node-meta');
+      const content = node.querySelector('.node-content');
+
+      // Initial state setup
+      gsap.set(dot, { scale: 0, opacity: 0 });
+      gsap.set(meta, { x: -20, opacity: 0 });
+      gsap.set(content, { x: 20, opacity: 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: node,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      // Urutan animasi: Kotak kecil (dot) muncul -> Meta & Content masuk secara bersamaan
+      tl.to(dot, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.4,
+        ease: "power3.out"
+      })
+        .to([meta, content], {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out"
+        }, "-=0.2");
+    });
+  </script>
+
+  <!-- ==========================================
+  SECTION: 5 PILAR CLOUD (DIOPTIMASI UNTUK MOBILE)
+  ========================================== -->
+  <section id="karakteristik-editorial"
+    class="pin-master min-h-[100dvh] w-full relative z-10 overflow-hidden bg-[#03060D] text-slate-200 font-sans"
+    style="perspective: 1000px;">
+
+    <!-- MAIN TITLE (Sticky Header) -->
+    <div class="absolute top-6 md:top-10 left-6 md:left-24 z-50 pointer-events-none mix-blend-difference">
+      <h2 class="text-[10px] md:text-sm font-bold tracking-[0.3em] text-slate-300 uppercase opacity-70">
+        Arsitektur Fundamental
+      </h2>
+      <div class="text-base md:text-2xl font-bold tracking-tight text-white mt-1">
+        5 Pilar Cloud Computing
+      </div>
+    </div>
+
+    <!-- Background Grid -->
+    <div class="gsap-bg-grid absolute inset-0 pointer-events-none z-0 opacity-40 origin-center scale-[1.2]">
+      <div class="absolute inset-0 bg-grid-premium"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-[#03060D] via-transparent to-[#03060D]"></div>
+    </div>
+
+    <!-- [OPTIMASI: Flex-col di HP, Flex-row di Desktop] -->
+    <div
+      class="horizontal-slider min-h-screen pt-20 md:pt-0 h-full flex flex-col md:flex-row w-full md:w-max relative z-10">
+
+      <!-- ITEM 1 -->
+      <article
+        class="cloud-panel w-full md:w-screen h-auto py-16 md:py-0 md:h-full flex flex-col md:flex-row items-center relative px-6 md:px-24 flex-shrink-0">
+        <div
+          class="panel-svg-wrapper absolute inset-0 md:left-1/3 flex items-center justify-center opacity-10 md:opacity-100 z-0 pointer-events-none will-change-transform">
+          <svg viewBox="0 0 800 800" class="w-full h-full max-w-[800px]">
+            <g class="svg-group glow-blue">
+              <path class="draw-path" fill="none" stroke="rgba(59, 130, 246, 0.4)" stroke-width="2"
+                stroke-linecap="round" d="M100,600 C300,600 200,200 500,300 S700,500 700,200" />
+              <path class="draw-path" fill="none" stroke="rgba(59, 130, 246, 0.2)" stroke-width="1"
+                d="M100,600 L200,400 L500,300" />
+              <circle class="node" cx="100" cy="600" r="6" fill="#3b82f6" />
+              <circle class="node" cx="500" cy="300" r="8" fill="#60a5fa" />
+              <circle class="node" cx="700" cy="200" r="5" fill="#3b82f6" />
+              <circle class="data-packet" r="4" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+        <div
+          class="watermark-number absolute right-0 md:right-32 top-1/2 -translate-y-1/2 text-[10rem] md:text-[40rem] font-black text-stroke-watermark font-mono select-none -z-10 leading-none will-change-transform">
+          01</div>
+        <div class="content-container max-w-5xl w-full z-10 will-change-transform">
+          <h3
+            class="gsap-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-4 md:mb-6 pb-2 leading-tight">
+            On-Demand<br><span class="text-blue-500">Self-Service</span>
+          </h3>
+          <p
+            class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
+            Kemandirian adalah kunci. Pengguna dapat secara instan menyediakan kapasitas komputasi secara sepihak tanpa
+            interaksi manusia.
+          </p>
+        </div>
+      </article>
+
+      <!-- ITEM 2 -->
+      <article
+        class="cloud-panel w-full md:w-screen h-auto py-16 md:py-0 md:h-full flex flex-col md:flex-row items-center relative px-6 md:px-24 flex-shrink-0">
+        <div
+          class="panel-svg-wrapper absolute inset-0 md:left-1/3 flex items-center justify-center opacity-10 md:opacity-100 z-0 pointer-events-none will-change-transform">
+          <svg viewBox="0 0 800 800" class="w-full h-full max-w-[800px]">
+            <g class="svg-group glow-cyan">
+              <path class="draw-path" fill="none" stroke="rgba(6, 182, 212, 0.4)" stroke-width="2"
+                stroke-linecap="round" d="M150,250 C400,100 500,600 700,450 S800,200 650,150" />
+              <path class="draw-path" fill="none" stroke="rgba(6, 182, 212, 0.2)" stroke-width="1.5"
+                stroke-dasharray="4 4" d="M150,250 L500,350 L700,450" />
+              <circle class="node" cx="150" cy="250" r="5" fill="#06b6d4" />
+              <circle class="node" cx="500" cy="350" r="7" fill="#22d3ee" />
+              <circle class="node" cx="700" cy="450" r="6" fill="#06b6d4" />
+              <circle class="data-packet" r="4" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+        <div
+          class="watermark-number absolute right-0 md:right-32 top-1/2 -translate-y-1/2 text-[10rem] md:text-[40rem] font-black text-stroke-watermark font-mono select-none -z-10 leading-none will-change-transform">
+          02</div>
+        <div class="content-container max-w-5xl w-full z-10 will-change-transform">
+          <h3
+            class="gsap-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-4 md:mb-6 pb-2 leading-tight">
+            Broad<br><span class="text-cyan-500">Network Access</span>
+          </h3>
+          <p
+            class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
+            Akses tanpa batas geografi. Kapabilitas layanan tersedia di seluruh jaringan dan dapat diakses dari berbagai
+            jenis perangkat endpoint.
+          </p>
+        </div>
+      </article>
+
+      <!-- ITEM 3 -->
+      <article
+        class="cloud-panel w-full md:w-screen h-auto py-16 md:py-0 md:h-full flex flex-col md:flex-row items-center relative px-6 md:px-24 flex-shrink-0">
+        <div
+          class="panel-svg-wrapper absolute inset-0 md:left-1/3 flex items-center justify-center opacity-10 md:opacity-100 z-0 pointer-events-none will-change-transform">
+          <svg viewBox="0 0 800 800" class="w-full h-full max-w-[800px]">
+            <g class="svg-group glow-indigo">
+              <path class="draw-path" fill="none" stroke="rgba(99, 102, 241, 0.4)" stroke-width="2"
+                stroke-linecap="round" d="M100,400 C300,400 400,200 600,400 S750,600 500,700" />
+              <path class="draw-path" fill="none" stroke="rgba(99, 102, 241, 0.3)" stroke-width="1.5"
+                d="M600,400 C550,250 450,150 300,100" />
+              <circle class="node" cx="600" cy="400" r="10" fill="#818cf8" />
+              <circle class="node" cx="100" cy="400" r="5" fill="#6366f1" />
+              <circle class="node" cx="300" cy="100" r="4" fill="#6366f1" />
+              <circle class="data-packet" r="4" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+        <div
+          class="watermark-number absolute right-0 md:right-32 top-1/2 -translate-y-1/2 text-[10rem] md:text-[40rem] font-black text-stroke-watermark font-mono select-none -z-10 leading-none will-change-transform">
+          03</div>
+        <div class="content-container max-w-5xl w-full z-10 will-change-transform">
+          <h3
+            class="gsap-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-4 md:mb-6 pb-2 leading-tight">
+            Resource<br><span class="text-indigo-500">Pooling</span>
+          </h3>
+          <p
+            class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
+            Sistem berbagi secara cerdas. Sumber daya komputasi digabungkan untuk melayani multi-penyewa dengan model
+            fisik dan virtual dinamis.
+          </p>
+        </div>
+      </article>
+
+      <!-- ITEM 4 -->
+      <article
+        class="cloud-panel w-full md:w-screen h-auto py-16 md:py-0 md:h-full flex flex-col md:flex-row items-center relative px-6 md:px-24 flex-shrink-0">
+        <div
+          class="panel-svg-wrapper absolute inset-0 md:left-1/3 flex items-center justify-center opacity-10 md:opacity-100 z-0 pointer-events-none will-change-transform">
+          <svg viewBox="0 0 800 800" class="w-full h-full max-w-[800px]">
+            <g class="svg-group glow-emerald">
+              <path class="draw-path" fill="none" stroke="rgba(16, 185, 129, 0.4)" stroke-width="2"
+                stroke-linecap="round" d="M150,650 C200,300 450,150 650,300 S750,700 400,600" />
+              <path class="draw-path" fill="none" stroke="rgba(16, 185, 129, 0.2)" stroke-width="1.5"
+                stroke-dasharray="5 5" d="M150,650 L650,300 L400,600" />
+              <circle class="node" cx="150" cy="650" r="5" fill="#10b981" />
+              <circle class="node" cx="650" cy="300" r="8" fill="#34d399" />
+              <circle class="node" cx="400" cy="600" r="6" fill="#10b981" />
+              <circle class="data-packet" r="4" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+        <div
+          class="watermark-number absolute right-0 md:right-32 top-1/2 -translate-y-1/2 text-[10rem] md:text-[40rem] font-black text-stroke-watermark font-mono select-none -z-10 leading-none will-change-transform">
+          04</div>
+        <div class="content-container max-w-5xl w-full z-10 will-change-transform">
+          <h3
+            class="gsap-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-4 md:mb-6 pb-2 leading-tight">
+            Rapid<br><span class="text-emerald-500">Elasticity</span>
+          </h3>
+          <p
+            class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
+            Sistem yang bernapas. Kapasitas dapat dialokasikan dan dirilis secara elastis untuk mengimbangi fluktuasi
+            demand.
+          </p>
+        </div>
+      </article>
+
+      <!-- ITEM 5 -->
+      <article
+        class="cloud-panel w-full md:w-screen h-auto py-16 md:py-0 md:h-full flex flex-col md:flex-row items-center relative px-6 md:px-24 flex-shrink-0">
+        <div
+          class="panel-svg-wrapper absolute inset-0 md:left-1/3 flex items-center justify-center opacity-10 md:opacity-100 z-0 pointer-events-none will-change-transform">
+          <svg viewBox="0 0 800 800" class="w-full h-full max-w-[800px]">
+            <g class="svg-group glow-purple">
+              <path class="draw-path" fill="none" stroke="rgba(168, 85, 247, 0.4)" stroke-width="2"
+                stroke-linecap="round" d="M200,200 C500,100 700,400 500,700 S100,600 300,400" />
+              <path class="draw-path" fill="none" stroke="rgba(168, 85, 247, 0.2)" stroke-width="1.5"
+                d="M200,200 C300,400 500,700 750,550" />
+              <circle class="node" cx="200" cy="200" r="5" fill="#a855f7" />
+              <circle class="node" cx="500" cy="700" r="7" fill="#c084fc" />
+              <circle class="node" cx="300" cy="400" r="6" fill="#a855f7" />
+              <circle class="data-packet" r="4" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+        <div
+          class="watermark-number absolute right-0 md:right-32 top-1/2 -translate-y-1/2 text-[10rem] md:text-[40rem] font-black text-stroke-watermark font-mono select-none -z-10 leading-none will-change-transform">
+          05</div>
+        <div class="content-container max-w-5xl w-full z-10 will-change-transform">
+          <h3
+            class="gsap-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-4 md:mb-6 pb-2 leading-tight">
+            Measured<br><span class="text-purple-500">Service</span>
+          </h3>
+          <p
+            class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
+            Transparansi meteran utilitas. Penggunaan cloud dimonitor, dikontrol, dan dilaporkan secara otomatis bagi
+            pengguna.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- [OPTIMASI: Script GSAP disesuaikan untuk Desktop dan Mobile] -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof gsap === 'undefined' || typeof SplitType === 'undefined') return;
+
+      gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+      const section = document.querySelector('#karakteristik-editorial');
+      const slider = section.querySelector('.horizontal-slider');
+      const panels = gsap.utils.toArray('.cloud-panel', section);
+
+      // SETUP TEKS & SVG PER PANEL (Berlaku untuk Desktop & Mobile)
+      panels.forEach((panel, i) => {
+        const title = new SplitType(panel.querySelector('.gsap-title'), { types: 'chars' });
+        const text = new SplitType(panel.querySelector('.gsap-text'), { types: 'words' });
+
+        title.chars.forEach(char => {
+          const wrapper = document.createElement('div'); wrapper.classList.add('reveal-wrapper');
+          char.parentNode.insertBefore(wrapper, char); wrapper.appendChild(char);
+        });
+        text.words.forEach(word => {
+          const wrapper = document.createElement('div'); wrapper.classList.add('reveal-wrapper');
+          word.parentNode.insertBefore(wrapper, word); wrapper.appendChild(word);
+        });
+
+        const svgGroup = panel.querySelector('.svg-group');
+        const drawPaths = panel.querySelectorAll('.draw-path');
+        const nodes = panel.querySelectorAll('.node');
+        const packet = panel.querySelector('.data-packet');
+        const mainPath = drawPaths[0];
+
+        drawPaths.forEach(path => {
+          const length = path.getTotalLength();
+          gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+        });
+        gsap.set(nodes, { scale: 0, transformOrigin: "center" });
+        gsap.set(packet, { opacity: 0 });
+
+        gsap.to(svgGroup, { y: "random(-15, 15)", rotation: "random(-2, 2)", duration: "random(4, 6)", ease: "sine.inOut", repeat: -1, yoyo: true });
+        gsap.to(nodes, { opacity: 0.6, scale: 1.2, duration: "random(1.5, 2.5)", ease: "sine.inOut", repeat: -1, yoyo: true, stagger: 0.2 });
+        gsap.to(packet, { motionPath: { path: mainPath, align: mainPath, alignOrigin: [0.5, 0.5] }, duration: 4, ease: "power1.inOut", repeat: -1 });
+      });
+
+      // MENGGUNAKAN MATCHMEDIA UNTUK OPTIMASI HP vs DESKTOP
+      let mm = gsap.matchMedia();
+
+      // [DESKTOP]: Horizontal Scroll Aktif
+      mm.add("(min-width: 768px)", () => {
+        const exactScrollDistance = slider.scrollWidth - window.innerWidth;
+        const scrollTween = gsap.to(slider, {
+          x: -exactScrollDistance, ease: "none",
+          scrollTrigger: {
+            trigger: section, pin: true, scrub: 0.8,
+            end: () => "+=" + exactScrollDistance, invalidateOnRefresh: true
+          }
+        });
+
+        gsap.to(section.querySelector('.gsap-bg-grid'), {
+          rotationZ: 10, scale: 1.2, xPercent: -5, ease: "none",
+          scrollTrigger: { trigger: section, start: "top top", end: () => "+=" + exactScrollDistance, scrub: true }
+        });
+
+        panels.forEach((panel, i) => {
+          const titleChars = panel.querySelectorAll('.gsap-title .char');
+          const textWords = panel.querySelectorAll('.gsap-text .word');
+          const watermark = panel.querySelector('.watermark-number');
+          const drawPaths = panel.querySelectorAll('.draw-path');
+          const nodes = panel.querySelectorAll('.node');
+          const packet = panel.querySelector('.data-packet');
+          const contentContainer = panel.querySelector('.content-container');
+          const svgWrapper = panel.querySelector('.panel-svg-wrapper');
+
+          const triggerConfig = i === 0
+            ? { scrollTrigger: { trigger: section, start: "top 60%", toggleActions: "play none none reverse" } }
+            : { scrollTrigger: { trigger: panel, containerAnimation: scrollTween, start: "left 80%", toggleActions: "play none none reverse" } };
+
+          const entryTl = gsap.timeline(triggerConfig);
+          entryTl.to(drawPaths, { strokeDashoffset: 0, duration: 1.5, ease: "power2.out", stagger: 0.2 }, 0)
+            .to(nodes, { scale: 1, duration: 0.8, ease: "back.out(2)", stagger: 0.1 }, 0.5)
+            .to(packet, { opacity: 1, duration: 0.5 }, 0.8)
+            .fromTo(watermark, { x: 100, scale: 0.8, opacity: 0, rotationX: 10 }, { x: 0, scale: 1, opacity: 1, rotationX: 0, duration: 1.2, ease: "power3.out" }, 0.2)
+            .fromTo(titleChars, { yPercent: 120, rotateZ: 8, opacity: 0 }, { yPercent: 0, rotateZ: 0, opacity: 1, stagger: 0.02, duration: 1, ease: "back.out(1.5)" }, 0.3)
+            .fromTo(textWords, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.015, duration: 0.8, ease: "power4.out" }, 0.6);
+
+          const exitTl = gsap.timeline({ scrollTrigger: { trigger: panel, containerAnimation: scrollTween, start: "left -5%", end: "right 50%", scrub: 1 } });
+          exitTl.to([contentContainer, watermark, svgWrapper], { opacity: 0, scale: 0.85, x: -100, filter: "blur(12px)", ease: "power2.inOut" });
+        });
+      });
+
+      // [MOBILE]: Vertical Scroll Standar Tanpa Pin (Sangat Ringan)
+      mm.add("(max-width: 767px)", () => {
+        panels.forEach((panel) => {
+          const titleChars = panel.querySelectorAll('.gsap-title .char');
+          const textWords = panel.querySelectorAll('.gsap-text .word');
+          const watermark = panel.querySelector('.watermark-number');
+          const drawPaths = panel.querySelectorAll('.draw-path');
+          const nodes = panel.querySelectorAll('.node');
+          const packet = panel.querySelector('.data-packet');
+
+          const entryTl = gsap.timeline({
+            scrollTrigger: { trigger: panel, start: "top 75%", toggleActions: "play none none reverse" }
+          });
+
+          entryTl.to(drawPaths, { strokeDashoffset: 0, duration: 1, ease: "power2.out" }, 0)
+            .to(nodes, { scale: 1, duration: 0.5 }, 0.2)
+            .to(packet, { opacity: 1, duration: 0.3 }, 0.4)
+            .fromTo(watermark, { opacity: 0, scale: 0.9 }, { opacity: 0.3, scale: 1, duration: 0.8 }, 0)
+            .fromTo(titleChars, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.01, duration: 0.5 }, 0.2)
+            .fromTo(textWords, { yPercent: 50, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.01, duration: 0.5 }, 0.4);
+        });
+      });
+    });
+  </script>
+
+  <style>
+    @keyframes light-speed {
+      0% {
+        stroke-dashoffset: 600;
+      }
+
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes float-rack {
+
+      0%,
+      100% {
+        transform: rotateX(18deg) rotateY(-18deg) rotateZ(2deg) translateY(0px);
+      }
+
+      50% {
+        transform: rotateX(18deg) rotateY(-18deg) rotateZ(2deg) translateY(-8px);
+      }
+    }
+
+    .animate-white-cable-1 {
+      stroke-dasharray: 60 220;
+      animation: light-speed 2s linear infinite;
+    }
+
+    .animate-white-cable-2 {
+      stroke-dasharray: 80 260;
+      animation: light-speed 1.6s linear infinite;
+    }
+
+    .animate-white-cable-3 {
+      stroke-dasharray: 50 190;
+      animation: light-speed 2.4s linear infinite;
+    }
+
+    /* Enhanced 3D Server Chassis */
+    .perspective-container {
+      perspective: 1200px;
+    }
+
+    .rack-3d-chassis {
+      transform: rotateX(18deg) rotateY(-18deg) rotateZ(2deg);
+      transform-style: preserve-3d;
+      box-shadow: -20px 25px 35px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 255, 255, 0.05);
+      animation: float-rack 6s ease-in-out infinite;
+    }
+
+    /* 3D Side Depth Panel */
+    .rack-3d-side-panel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -16px;
+      width: 16px;
+      background: linear-gradient(to right, #040711, #0b1226);
+      transform: rotateY(90deg);
+      transform-origin: right;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* 3D Top Depth Panel */
+    .rack-3d-top-panel {
+      position: absolute;
+      top: -16px;
+      left: 0;
+      right: 0;
+      height: 16px;
+      background: linear-gradient(to top, #060a17, #0f172a);
+      transform: rotateX(90deg);
+      transform-origin: top;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+  </style>
+
+  
+  <!-- ==========================================
+     SECTION 3: KEUNGGULAN CLOUD (GLOSSY REACT BITS STYLE)
+  ========================================== -->
+  <section id="keunggulan-cloud"
+    class="relative z-20 w-full bg-[#03060D] py-24 md:py-32 border-t border-white/[0.05] font-sans overflow-hidden text-slate-200">
+
+    <!-- Premium Grid Background -->
+    <div class="absolute inset-0 pointer-events-none z-0 opacity-50">
+      <div class="absolute inset-0 bg-grid-premium"></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-[#03060D] via-transparent to-[#03060D]"></div>
+      <!-- Subtle glow biru di tengah -->
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-blue-500/5 rounded-full blur-[100px]">
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-30">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-10">
+
+        <!-- Kiri: Headline & Deskripsi -->
+        <div class="lg:col-span-5 flex flex-col justify-start pt-2">
+          <h2 data-aos="fade-up"
+            class="text-4xl md:text-5xl lg:text-[3.5rem] font-display font-bold text-white leading-[1.15] tracking-tight mb-8">
+            Infrastruktur masa depan, siap hari ini
+          </h2>
+
+          <p data-aos="fade-up" data-aos-delay="100" class="text-slate-300 text-lg leading-relaxed mb-6 font-light">
+            Pendekatan cloud modern menghapus batasan fisik. Setiap <em>resource</em> dirancang untuk menopang beban
+            kerja kritikal dengan tingkat ketersediaan tinggi, memberikan Anda pondasi digital yang kokoh.
+          </p>
+
+          <p data-aos="fade-up" data-aos-delay="200" class="text-slate-300 text-lg leading-relaxed mb-10 font-light">
+            Tim IT kini bisa berfokus pada inovasi dan pengembangan produk. Penyedia layanan cloud menangani
+            kompleksitas infrastruktur, skalabilitas, dan keamanan secara otomatis di belakang layar.
+          </p>
+
+          <div data-aos="fade-up" data-aos-delay="300">
+            <a href="#layanan"
+              class="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/20 transition-all text-white font-medium text-sm w-max group backdrop-blur-sm">
+              <svg class="w-4 h-4 text-white group-hover:text-blue-400 transition-colors" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                </path>
+              </svg>
+              Eksplorasi layanan cloud
+              <svg class="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Kanan: Cards Grid -->
+        <div class="lg:col-span-7 flex flex-col">
+
+          <!-- Label Header -->
+          <div data-aos="fade-up"
+            class="flex items-center gap-2 mb-4 text-slate-500 text-[11px] font-bold tracking-[0.15em] uppercase">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+            NILAI UTAMA CLOUD
+          </div>
+
+          <!-- 2x2 Grid Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+
+            <!-- Card 1 -->
+            <div data-aos="fade-up" data-aos-delay="100"
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              <!-- Glossy Hover Effect (The Magic) -->
+              <div
+                class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
+              </div>
+
+              <!-- Content -->
+              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
+                Efisiensi Biaya (OpEx) Tanpa Investasi Awal
+              </h3>
+              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
+                <svg class="w-4 h-4 text-blue-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                  </path>
+                </svg>
+                <span>Pay-as-you-go model</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div data-aos="fade-up" data-aos-delay="200"
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              <div
+                class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
+              </div>
+
+              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
+                Skalabilitas Elastis & Auto-Scaling Otomatis
+              </h3>
+              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
+                <svg class="w-4 h-4 text-cyan-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                  </path>
+                </svg>
+                <span>Scale in seconds</span>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div data-aos="fade-up" data-aos-delay="300"
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              <div
+                class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
+              </div>
+
+              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
+                Keamanan Lapis Ganda Kelas Enterprise
+              </h3>
+              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
+                <svg class="w-4 h-4 text-emerald-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                  </path>
+                </svg>
+                <span>End-to-end encryption</span>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div data-aos="fade-up" data-aos-delay="400"
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              <div
+                class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
+              </div>
+
+              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
+                Ketersediaan Tinggi dengan Uptime 99.9%
+              </h3>
+              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
+                <svg class="w-4 h-4 text-purple-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                  </path>
+                </svg>
+                <span>Global redundancy</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+     SECTION 2: MODEL LAYANAN (NEXT.JS / VERCEL INSPIRED)
+     ========================================== -->
+  <section id="layanan"
+    class="relative z-20 w-full bg-[#030712] border-y border-white/[0.08] py-24 md:py-32 font-sans overflow-hidden text-slate-200">
+
+    <!-- Background Grid Minimalis & Radial Beam -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div
+        class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px] opacity-40">
+      </div>
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-white/5 rounded-full blur-[120px]">
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+
+      <!-- Section Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16 md:mb-20">
+        <h2 data-aos="fade-up"
+          class="font-display font-semibold text-3xl md:text-[2.75rem] text-white tracking-tight mb-4 leading-tight">
+          Model Layanan Cloud
+        </h2>
+        <p data-aos="fade-up" data-aos-delay="100" class="text-slate-400 text-sm md:text-base font-light">
+          Arsitektur infrastruktur terdistribusi yang dapat disesuaikan dengan kebutuhan Anda.
+        </p>
+      </div>
+
+      <!-- Central Sleek Physical Server & 90-Degree White Light Cables -->
+      <div class="hidden md:flex flex-col items-center justify-center mb-16 relative w-full" data-aos="fade-up"
+        data-aos-delay="150">
+
+        <!-- SVG Cables (White Laser Flow Effect) -->
+        <svg
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[900px] h-[260px] pointer-events-none z-0"
+          viewBox="0 0 900 260" fill="none">
+          <defs>
+            <!-- Gradient Pulsa Putih -->
+            <linearGradient id="white-laser-flow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+              <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+            </linearGradient>
+
+            <!-- Glow Filter untuk Jalur Putih -->
+            <filter id="glow-white" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- Base Circuit Lines (Jalur Dim) -->
+          <path d="M 420,50 L 420,110 L 150,110 L 150,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
+            stroke-dasharray="4 4" />
+          <path d="M 435,70 L 435,130 L 180,130 L 180,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
+            stroke-dasharray="4 4" />
+          <path d="M 445,85 L 435,85 L 435,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
+            stroke-dasharray="4 4" />
+          <path d="M 455,85 L 465,85 L 465,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
+            stroke-dasharray="4 4" />
+          <path d="M 465,70 L 465,130 L 720,130 L 720,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
+            stroke-dasharray="4 4" />
+          <path d="M 480,50 L 480,110 L 750,110 L 750,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
+            stroke-dasharray="4 4" />
+
+          <!-- Animated White Laser Pulses -->
+          <path d="M 420,50 L 420,110 L 150,110 L 150,260" stroke="url(#white-laser-flow)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240" class="animate-laser-flow" />
+          <path d="M 435,70 L 435,130 L 180,130 L 180,260" stroke="url(#white-laser-flow)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+            class="animate-laser-flow [animation-delay:0.6s]" />
+
+          <path d="M 445,85 L 435,85 L 435,260" stroke="url(#white-laser-flow)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+            class="animate-laser-flow [animation-delay:0.3s]" />
+          <path d="M 455,85 L 465,85 L 465,260" stroke="url(#white-laser-flow)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+            class="animate-laser-flow [animation-delay:0.9s]" />
+
+          <path d="M 465,70 L 465,130 L 720,130 L 720,260" stroke="url(#white-laser-flow)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+            class="animate-laser-flow [animation-delay:0.4s]" />
+          <path d="M 480,50 L 480,110 L 750,110 L 750,260" stroke="url(#white-laser-flow)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+            class="animate-laser-flow [animation-delay:0.8s]" />
+        </svg>
+
+        <!-- Physical Server Chassis (No Text, Purely Visual) -->
+        <div
+          class="relative z-10 w-72 bg-[#090d16]/90 backdrop-blur-xl border border-white/10 rounded-xl p-3 shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col gap-2.5 transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] group">
+
+          <!-- Subtle Top Glow Line -->
+          <div
+            class="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent">
+          </div>
+
+          <!-- Server Blade 1 (Compute Node) -->
+          <div
+            class="h-10 bg-white/[0.02] border border-white/[0.05] rounded flex items-center px-3 justify-between shadow-inner">
+            <!-- Power & Status LEDs -->
+            <div class="flex items-center gap-2">
+              <!-- Power Button / LED -->
+              <div
+                class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] border border-emerald-300/50">
+              </div>
+              <!-- Fault LED (Off) -->
+              <div class="w-1.5 h-1.5 rounded-full bg-slate-800 border border-black"></div>
+            </div>
+
+            <!-- Hot-swap Drive Bays -->
+            <div class="flex gap-1.5">
+              <!-- Drive 1 (Active) -->
+              <div class="w-3.5 h-6 bg-black/40 border border-white/10 rounded-sm flex flex-col justify-end p-0.5">
+                <div class="w-full h-1 bg-blue-400/80 rounded-[1px] animate-pulse"></div>
+              </div>
+              <!-- Drive 2 (Active) -->
+              <div class="w-3.5 h-6 bg-black/40 border border-white/10 rounded-sm flex flex-col justify-end p-0.5">
+                <div class="w-full h-1 bg-blue-400/80 rounded-[1px] animate-pulse [animation-delay:200ms]"></div>
+              </div>
+              <!-- Drive 3 (Active) -->
+              <div class="w-3.5 h-6 bg-black/40 border border-white/10 rounded-sm flex flex-col justify-end p-0.5">
+                <div class="w-full h-1 bg-blue-400/80 rounded-[1px] animate-pulse [animation-delay:400ms]"></div>
+              </div>
+              <!-- Drive 4 (Empty/Standby) -->
+              <div class="w-3.5 h-6 bg-black/40 border border-white/5 rounded-sm flex flex-col justify-end p-0.5">
+                <div class="w-full h-1 bg-slate-700 rounded-[1px]"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Server Blade 2 (Network & Cooling) -->
+          <div
+            class="h-10 bg-white/[0.02] border border-white/[0.05] rounded flex items-center px-3 justify-between shadow-inner">
+            <!-- Network Ports (NIC) -->
+            <div class="flex gap-2.5">
+              <!-- Port 1 -->
+              <div
+                class="w-5 h-4 bg-black/60 border border-white/10 rounded-sm relative flex justify-center items-end pb-[1px]">
+                <div class="w-3 h-1 bg-black/80 rounded-[1px]"></div>
+                <div class="absolute -top-0.5 -right-0.5 w-1 h-1 bg-amber-400 rounded-full animate-ping"></div>
+              </div>
+              <!-- Port 2 -->
+              <div
+                class="w-5 h-4 bg-black/60 border border-white/10 rounded-sm relative flex justify-center items-end pb-[1px]">
+                <div class="w-3 h-1 bg-black/80 rounded-[1px]"></div>
+                <div
+                  class="absolute -top-0.5 -right-0.5 w-1 h-1 bg-emerald-400 rounded-full animate-ping [animation-delay:300ms]">
+                </div>
+              </div>
+            </div>
+
+            <!-- Grill / Ventilation -->
+            <div class="flex gap-1.5">
+              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
+              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
+              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
+              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
+              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
+              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Cards Grid (Next.js Minimal Glass Card Style) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Card 1: IaaS -->
+        <div data-aos="fade-up" data-aos-delay="200"
+          class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+          <div>
+            <div class="mb-8 flex items-center justify-between">
+              <div
+                class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01">
+                  </path>
+                </svg>
+              </div>
+              <span
+                class="text-slate-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 text-base">↗</span>
+            </div>
+
+            <h3 class="text-lg font-medium text-white mb-2">IaaS</h3>
+            <p class="text-slate-400 text-sm leading-relaxed font-light">
+              Infrastructure as a Service. Akses <em class="text-slate-200 not-italic">bare-metal</em> virtual dengan
+              kendali penuh atas OS, komputasi, dan jaringan.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2: PaaS -->
+        <div data-aos="fade-up" data-aos-delay="300"
+          class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+          <div>
+            <div class="mb-8 flex items-center justify-between">
+              <div
+                class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <span
+                class="text-slate-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 text-base">↗</span>
+            </div>
+
+            <h3 class="text-lg font-medium text-white mb-2">PaaS</h3>
+            <p class="text-slate-400 text-sm leading-relaxed font-light">
+              Platform as a Service. Fokus penuh pada <em class="text-slate-200 not-italic">deployment</em> aplikasi
+              tanpa pusing memikirkan manajemen server.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3: SaaS -->
+        <div data-aos="fade-up" data-aos-delay="400"
+          class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+          <div>
+            <div class="mb-8 flex items-center justify-between">
+              <div
+                class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                  </path>
+                </svg>
+              </div>
+              <span
+                class="text-slate-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 text-base">↗</span>
+            </div>
+
+            <h3 class="text-lg font-medium text-white mb-2">SaaS</h3>
+            <p class="text-slate-400 text-sm leading-relaxed font-light">
+              Software as a Service. Solusi aplikasi siap pakai berskala global yang langsung dapat diakses via peramban
+              web.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ==========================================
+         FOOTER SECTION 
+    ========================================== -->
+  <footer class="relative z-20 w-full bg-[#03050a] border-t border-slate-800/60 pt-20 pb-10 overflow-hidden font-sans">
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+        <div class="space-y-6" data-aos="fade-up" data-aos-delay="50">
+          <a href="#" class="flex items-center gap-2 group w-max">
+            <svg class="w-7 h-7 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+            </svg>
+            <span class="font-display font-bold text-xl tracking-tight text-white">Cloud<span
+                class="text-blue-500">Computing</span></span>
+          </a>
+          <p class="text-sm text-slate-400 leading-relaxed pr-4">Membangun masa depan digital dengan infrastruktur awan
+            yang tangguh, elastis, dan aman untuk skala global.</p>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="100">
+          <h4 class="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Eksplorasi</h4>
+          <ul class="space-y-4">
+            <li><a href="#apa-itu-cloud"
+                class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Pengertian Cloud</a></li>
+            <li><a href="#komparasi"
+                class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Evolusi Infrastruktur</a>
+            </li>
+            <li><a href="#karakteristik-editorial"
+                class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Karakteristik Utama</a>
+            </li>
+            <li><a href="#layanan"
+                class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Model Layanan</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3 & 4 (Ringkasan struktur yang sama) -->
+        <div data-aos="fade-up" data-aos-delay="150">
+          <h4 class="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Developer</h4>
+          <ul class="space-y-4">
+            <li><a href="#"
+                class="text-sm text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-cyan-400"></span>Dokumentasi API</a></li>
+            <li><a href="#"
+                class="text-sm text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-cyan-400"></span>Status Network</a></li>
+          </ul>
+        </div>
+
+        <div data-aos="fade-up" data-aos-delay="200">
+          <h4 class="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Tech Newsletter</h4>
+          <form
+            class="flex items-center w-full bg-slate-900 border border-slate-700 rounded-lg overflow-hidden focus-within:border-blue-500">
+            <input type="email" placeholder="dev@example.com"
+              class="w-full bg-transparent text-sm text-white px-4 py-2.5 outline-none placeholder:text-slate-600 font-mono"
+              required />
+            <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5"><svg class="w-4 h-4"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                </path>
+              </svg></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-slate-500 text-sm font-medium">&copy; <span id="current-year"></span> Cloud Computing Edu. All
+          rights reserved.</p>
+        <p class="text-slate-600 text-xs flex items-center gap-2">Designed with <svg
+            class="w-3 h-3 text-red-500 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg> for Tech Enthusiasts</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Scripts Asli Kamu -->
+  <script src="animasi.js"></script>
+  <script src="globe.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, easing: "ease-out-cubic", once: false, offset: 50 });
+  </script>
+</body>
+
+</html>
