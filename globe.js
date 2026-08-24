@@ -1,78 +1,75 @@
 // ==========================================
-// DEVICE DETECTION
+// DETEKSI DEVICE & OPTIMASI RESOLUSI (Ga Burik)
 // ==========================================
 const isMobile = window.innerWidth < 768;
+// Menyesuaikan pixel ratio agar tajam tapi tetap ringan di mobile
 const dpr = isMobile ? Math.min(window.devicePixelRatio, 1.2) : Math.min(window.devicePixelRatio, 1.5);
 
 // ==========================================
-// COLORS
+// WARNA BUMI & DARATAN
 // ==========================================
 const style = getComputedStyle(document.body);
 const colorWater = style.getPropertyValue("--globe-water").trim() || "#000000";
 const colorLand = style.getPropertyValue("--globe-land").trim() || "#111111";
 
 // ==========================================
-// CONTAINER & SCENE
+// SCENE & CONTAINER
 // ==========================================
-const container = document.getElementById("canvas-container");
 const scene = new THREE.Scene();
+const container = document.getElementById("canvas-container");
 
 // ==========================================
-// CAMERA
+// KAMERA
 // ==========================================
-const camera = new THREE.PerspectiveCamera(
-  45,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1500 // OPTIMASI: Kurangi far clipping plane agar object super jauh tidak di-render
-);
+// Far clipping dikurangi agar objek terlalu jauh tidak di-render
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1500);
 camera.position.set(0, 0, isMobile ? 400 : 320);
 
 // ==========================================
-// RENDERER (OPTIMASI GPU)
+// RENDERER (Optimasi GPU Mobile)
 // ==========================================
 const renderer = new THREE.WebGLRenderer({
-  antialias: !isMobile, 
+  antialias: !isMobile,
   alpha: true,
   powerPreference: "high-performance",
-  precision: isMobile ? "mediump" : "highp", // OPTIMASI KRITIS: Meringankan GPU mobile secara drastis
+  precision: isMobile ? "mediump" : "highp", // Meringankan GPU mobile secara drastis
 });
 
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(dpr);
+renderer.setPixelRatio(dpr); // Bikin grafis "ga burik" sesuai layar
 container.appendChild(renderer.domElement);
 
 // ==========================================
-// ORBIT CONTROLS
+// KONTROL & ANIMASI MENGORBIT
 // ==========================================
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.enableZoom = false;
+// Animasi bumi mengorbit otomatis
 controls.autoRotate = true;
 controls.autoRotateSpeed = 0.6;
 
 // ==========================================
-// GLOBE
+// BUMI UTAMA (Transparan & Berwarna)
 // ==========================================
-const globe = new ThreeGlobe()
-  .showGlobe(true)
-  .showAtmosphere(!isMobile)
-  .atmosphereColor("#588fe9")
-  .atmosphereAltitude(0.18);
-
-globe.globeMaterial().color = new THREE.Color(colorWater);
-globe.globeMaterial().roughness = 0.7;
-globe.globeMaterial().metalness = 0.1;
-
-globe.rotation.x = 0.2;
-globe.rotation.y = Math.PI;
+const globeRadius = 100;
+// Sedikit kurangi segmen di mobile agar lebih lancar
+const segments = isMobile ? 48 : 64;
+const globeGeometry = new THREE.SphereGeometry(globeRadius, segments, segments);
+const globeMaterial = new THREE.MeshBasicMaterial({ 
+    color: colorWater, // Menggunakan warna dari file js sebelumnya
+    transparent: true,
+    opacity: 0.8 // Dibuat sedikit tebal agar garis daratan terlihat jelas
+});
+const globe = new THREE.Mesh(globeGeometry, globeMaterial);
+globe.rotation.x = 0.2; // Sedikit dimiringkan estetik
 scene.add(globe);
 
 // ==========================================
-// STARFIELD (OPTIMASI)
+// BINTANG-BINTANG (Animasi Latar)
 // ==========================================
-const starsCount = isMobile ? 300 : 800; // Dikurangi sedikit, tapi size dibesarkan agar tetap penuh
+const starsCount = isMobile ? 300 : 800;
 const starGeometry = new THREE.BufferGeometry();
 const starPositions = new Float32Array(starsCount * 3);
 const starColors = new Float32Array(starsCount * 3);
@@ -105,7 +102,7 @@ starGeometry.setAttribute("color", new THREE.BufferAttribute(starColors, 3));
 
 const starMaterial = new THREE.PointsMaterial({
   color: 0xffffff,
-  size: isMobile ? 1.2 : 1.5, // Besarkan sedikit untuk kompensasi jumlah yang dikurangi
+  size: isMobile ? 1.2 : 1.5,
   vertexColors: true,
   transparent: true,
   opacity: 0.8,
@@ -118,267 +115,60 @@ starField.frustumCulled = false;
 scene.add(starField);
 
 // ==========================================
-// SERVER NODES & LABELS
+// DARATAN (Peta GeoJSON)
 // ==========================================
-const serverNodes = [
-  { name: "Indonesia", lat: -6.2, lng: 106.84, type: "server" },
-  { name: "USA", lat: 38.03, lng: -78.51, type: "server" },
-  { name: "Japan", lat: 35.67, lng: 139.65, type: "server" },
-  { name: "Germany", lat: 50.11, lng: 8.68, type: "server" },
-  { name: "Singapore", lat: 1.35, lng: 103.81, type: "server" },
-  { name: "UK", lat: 51.5, lng: -0.12, type: "server" },
-  { name: "Australia", lat: -33.86, lng: 151.2, type: "server" },
-  { name: "Brazil", lat: -23.55, lng: -46.63, type: "server" },
-  { name: "India", lat: 19.07, lng: 72.87, type: "server" },
-  { name: "UEA", lat: 25.2, lng: 55.27, type: "server" },
-];
-
-const serverLabels = new THREE.Group();
-globe.add(serverLabels);
-
-function createServerLabel(text) {
-  // Simplified label for better mobile performance - reduce canvas size and DPR overhead
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  // Use lower DPR on mobile to save VRAM, still crisp enough for node labels
-  const localDpr = isMobile ? Math.min(window.devicePixelRatio, 1.5) : 2;
-
-  const fontSize = (isMobile ? 24 : 40) * localDpr;
-  const subFontSize = (isMobile ? 12 : 16) * localDpr;
-
-  ctx.font = `900 ${fontSize}px "Space Grotesk", sans-serif`;
-  const textWidth = ctx.measureText(text.toUpperCase()).width;
-  ctx.font = `600 ${subFontSize}px monospace`;
-  const subTextWidth = ctx.measureText("ACTIVE").width;
-  const contentWidth = Math.max(textWidth, subTextWidth);
-
-  // Reduced padding for mobile
-  const paddingX = isMobile ? 16 * localDpr : 24 * localDpr;
-  const paddingY = isMobile ? 12 * localDpr : 16 * localDpr;
-  const glowMargin = isMobile ? 12 * localDpr : 16 * localDpr;
-
-  // Fixed size canvas to avoid dynamic resizing overhead
-  const canvasSize = contentWidth + (paddingX * 2) + (glowMargin * 2) + (32 * localDpr);
-  canvas.width = canvasSize;
-  canvas.height = fontSize + subFontSize + (paddingY * 2) + (glowMargin * 2);
-
-  const startX = glowMargin;
-  const startY = glowMargin;
-  const boxW = canvas.width - (glowMargin * 2);
-  const boxH = canvas.height - (glowMargin * 2);
-
-  // Simple rounded rect background
-  const radius = isMobile ? 8 * localDpr : 12 * localDpr;
-  ctx.beginPath();
-  ctx.moveTo(startX + radius, startY);
-  ctx.lineTo(startX + boxW - radius, startY);
-  ctx.quadraticCurveTo(startX + boxW, startY, startX + boxW, startY + radius);
-  ctx.lineTo(startX + boxW, startY + boxH - radius);
-  ctx.quadraticCurveTo(startX + boxW, startY + boxH, startX + boxW - radius, startY + boxH);
-  ctx.lineTo(startX + radius, startY + boxH);
-  ctx.quadraticCurveTo(startX, startY + boxH, startX, startY + boxH - radius);
-  ctx.lineTo(startX, startY + radius);
-  ctx.quadraticCurveTo(startX, startY, startX + radius, startY);
-  ctx.closePath();
-
-  // Solid dark background
-  ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
-  ctx.fill();
-
-  // Border
-  ctx.lineWidth = isMobile ? 1.5 * localDpr : 2 * localDpr;
-  ctx.strokeStyle = "rgba(56, 189, 248, 0.9)";
-  ctx.stroke();
-
-  // Accent bar
-  ctx.fillStyle = "#38bdf8";
-  ctx.fillRect(startX, startY, 12 * localDpr, 3 * localDpr);
-  ctx.fillRect(startX + boxW - (12 * localDpr), startY + boxH - (3 * localDpr), 12 * localDpr, 3 * localDpr);
-
-  // Dot
-  const dotX = startX + paddingX;
-  const dotY = startY + (boxH / 2);
-  ctx.beginPath();
-  ctx.arc(dotX, dotY, isMobile ? 4 * localDpr : 6 * localDpr, 0, Math.PI * 2);
-  ctx.fillStyle = "#10b981";
-  ctx.fill();
-
-  // Text - uppercase only, smaller footprint
-  const textStartX = dotX + (20 * localDpr);
-  ctx.fillStyle = "#ffffff";
-  ctx.font = `900 ${fontSize}px "Space Grotesk", sans-serif`;
-  ctx.textBaseline = "bottom";
-  ctx.fillText(text.toUpperCase(), textStartX, startY + (boxH / 2) + (2 * localDpr));
-
-  // Smaller subtitle
-  ctx.fillStyle = "#94a3b8";
-  ctx.font = `600 ${subFontSize}px monospace`;
-  ctx.textBaseline = "top";
-  ctx.fillText("ACTIVE", textStartX, startY + (boxH / 2) + (6 * localDpr));
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.generateMipmaps = false;
-
-  const material = new THREE.SpriteMaterial({
-    map: texture,
-    transparent: true,
-    depthTest: false,
-    depthWrite: false,
-  });
-
-  const sprite = new THREE.Sprite(material);
-  // Adjusted scale for the simplified label size
-  sprite.scale.set(canvas.width * (isMobile ? 0.06 : 0.08) / localDpr, canvas.height * (isMobile ? 0.06 : 0.08) / localDpr, 1);
-  sprite.renderOrder = 1;
-
-  return sprite;
+function toSphericalCoords(lng, lat, radius) {
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (-lng + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+        radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.cos(phi),
+        radius * Math.sin(phi) * Math.sin(theta)
+    );
 }
 
-function addServerLabels() {
-  serverNodes.forEach((server) => {
-    const coords = globe.getCoords(server.lat, server.lng, 0.05);
-    const label = createServerLabel(server.name);
-    label.position.set(coords.x, coords.y, coords.z);
-    serverLabels.add(label);
-  });
-}
+function drawLines(coordinates, radius) {
+    const material = new THREE.LineBasicMaterial({
+        color: colorLand, // Warna daratan
+        linewidth: 2,
+        transparent: true,
+        opacity: 0.9
+    });
 
-// ==========================================
-// GEOJSON & DATA POPULATION
-// ==========================================
-let ringData = [];
-
-function extractPointsFromGeoJSON(features) {
-  const points = [];
-  features.forEach((feature) => {
-    if (!feature.geometry) return;
-    const processCoords = (coords) => {
-      coords.forEach((coord) => {
-        if (typeof coord[0] === "number" && typeof coord[1] === "number") {
-          points.push({ lng: coord[0], lat: coord[1] });
-        } else if (Array.isArray(coord)) {
-          processCoords(coord);
-        }
-      });
-    };
-    processCoords(feature.geometry.coordinates);
-  });
-  return points;
-}
-
-fetch("./custom.geo.json")
-  .then((res) => res.json())
-  .then((geojson) => {
-    const featuresData = geojson.features ? geojson.features : [geojson];
-
-    globe
-      .polygonsData(featuresData)
-      .polygonCapColor(() => colorLand)
-      .polygonSideColor(() => "#1e3a8a")
-      .polygonStrokeColor(() => "#1b2c41")
-      .polygonAltitude(0.01);
-
-    const landPoints = extractPointsFromGeoJSON(featuresData);
-    const userNodes = [];
-    const MAX_USER_POINTS = isMobile ? 20 : 50;
-    // Cap samples to prevent excessive random access on large geoJSON
-    const usablePoints = landPoints.slice(0, MAX_USER_POINTS * 2);
-    const NUM_USERS = Math.min(isMobile ? 15 : 45, landPoints.length, MAX_USER_POINTS);
-
-    for (let i = 0; i < NUM_USERS; i++) {
-      const idx = Math.floor(Math.random() * usablePoints.length);
-      const pt = usablePoints[idx];
-      userNodes.push({ lat: pt.lat, lng: pt.lng, type: "user" });
-    }
-
-    globe
-      .pointsData([...serverNodes, ...userNodes])
-      .pointLat("lat")
-      .pointLng("lng")
-      .pointColor((d) => (d.type === "server" ? "#ef4444" : "#00c3ff"))
-      .pointRadius((d) => (d.type === "server" ? 0.85 : 0.35))
-      .pointAltitude(0.02)
-      .pointResolution(isMobile ? 8 : 16); // Polygon lebih sedikit = lebih ringan
-
-    addServerLabels();
-
-    const arcsData = [];
-    const NUM_ARCS = isMobile ? 12 : 40; // Kurangi jumlah route arc di mobile
-
-    for (let i = 0; i < NUM_ARCS; i++) {
-      const startNode = userNodes[Math.floor(Math.random() * userNodes.length)];
-      const endNode = serverNodes[Math.floor(Math.random() * serverNodes.length)];
-      if (startNode && endNode) {
-        arcsData.push({
-          startLat: startNode.lat,
-          startLng: startNode.lng,
-          endLat: endNode.lat,
-          endLng: endNode.lng,
-          color: ["#5d82d1", "#0059ff"],
-          duration: 1100 + Math.random() * 1300,
-          lastTrigger: 0,
+    coordinates.forEach(ring => {
+        const geometry = new THREE.BufferGeometry();
+        const vertices = [];
+        ring.forEach(coord => {
+            const vertex = toSphericalCoords(coord[0], coord[1], radius);
+            vertices.push(vertex.x, vertex.y, vertex.z);
         });
-      }
-    }
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        const line = new THREE.Line(geometry, material);
+        
+        // Memasukkan garis ke dalam globe utama agar ikut rotasi
+        globe.add(line); 
+    });
+}
 
-    globe
-      .arcsData(arcsData)
-      .arcColor("color")
-      .arcDashLength(0.35)
-      .arcDashGap(1.5)
-      .arcDashInitialGap(() => Math.random() * 5)
-      .arcDashAnimateTime((d) => d.duration)
-      .arcStroke(isMobile ? 0.6 : 0.5) // Sedikit ditebalkan di mobile agar lebih jelas
-      .arcAltitudeAutoScale(0.28);
-
-    globe
-      .ringsData([])
-      .ringLat("lat")
-      .ringLng("lng")
-      .ringColor(() => (t) => `rgba(239, 68, 68, ${Math.pow(1 - t, 2)})`)
-      .ringMaxRadius(3.5)
-      .ringPropagationSpeed(3)
-      .ringRepeatPeriod(0);
-
-    const MAX_RINGS = isMobile ? 4 : 12; // OPTIMASI: Batasi maksimal ring yang aktif bersamaan
-
-    // OPTIMASI: Kurangi interval dan hindari Array mutasi berlebih
-    setInterval(() => {
-      const now = Date.now();
-      let hasUpdate = false;
-      const activeRings = [];
-
-      arcsData.forEach((arc) => {
-        if (!arc.lastTrigger || now - arc.lastTrigger > arc.duration) {
-          arc.lastTrigger = now;
-          activeRings.push({ lat: arc.endLat, lng: arc.endLng });
-          hasUpdate = true;
+function processGeoJSON(geojson) {
+    geojson.features.forEach(feature => {
+        const geom = feature.geometry;
+        if (geom.type === 'Polygon') {
+            drawLines(geom.coordinates, globeRadius);
+        } else if (geom.type === 'MultiPolygon') {
+            geom.coordinates.forEach(polygon => {
+                drawLines(polygon, globeRadius);
+            });
         }
-      });
+    });
+}
 
-      if (hasUpdate) {
-        // Ambil data terbaru secukupnya untuk menghindari Three.js membuat geometri telalu banyak
-        globe.ringsData(activeRings.slice(-MAX_RINGS));
-      }
-    }, isMobile ? 1200 : 600); // Trigger lebih lambat di mobile agar GPU bisa bernapas
-  })
-  .catch((err) => console.error("Error loading JSON:", err));
-
-// ==========================================
-// LIGHTS
-// ==========================================
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
-scene.add(ambientLight);
-
-const directionalLight1 = new THREE.DirectionalLight(0x38bdf8, 2);
-directionalLight1.position.set(1, 1, 1);
-scene.add(directionalLight1);
-
-const directionalLight2 = new THREE.DirectionalLight(0x818cf8, 1);
-directionalLight2.position.set(-1, -1, -1);
-scene.add(directionalLight2);
+fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+    .then(response => response.json())
+    .then(data => {
+        processGeoJSON(data);
+    })
+    .catch(err => console.error('Error loading GeoJSON:', err));
 
 // ==========================================
 // RESIZE (Throttled for mobile performance)
@@ -393,26 +183,27 @@ window.addEventListener("resize", () => {
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
       resizeTimeout = null;
-    }, isMobile ? 150 : 50); // Debounce resize on mobile to avoid layout thrashing
+    }, isMobile ? 150 : 50);
   }
 });
 
 // ==========================================
 // ANIMATION LOOP (Dioptimasi)
 // ==========================================
-// Reduced star rotation speed on mobile; use a per-frame counter to limit renderer calls
 let animationCounter = 0;
-const ANIMATION_TICKS_PER_RENDER = isMobile ? 3 : 1; // Throttle on mobile
+const ANIMATION_TICKS_PER_RENDER = isMobile ? 3 : 1;
 
 function animate() {
   requestAnimationFrame(animate);
 
   animationCounter++;
-  // Only update star rotation and controls every N frames to save GPU on mobile
+  
   if (animationCounter % ANIMATION_TICKS_PER_RENDER === 0) {
-    // Rotasi bintang lebih halus
+    // Rotasi bintang perlahan
     starField.rotation.y += 0.00005;
     starField.rotation.x += 0.00001;
+    
+    // Update kontrol agar animasi orbit bumi berjalan
     controls.update();
   }
 
