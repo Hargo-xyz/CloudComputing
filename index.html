@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id" class="scroll-smooth">
 
 <head>
@@ -89,8 +89,6 @@
   class="antialiased selection:bg-blue-500 selection:text-white bg-[#050811] text-slate-100 overflow-x-hidden font-inter">
 
   <!-- [OPTIMASI: Matikan 3D Globe di HP & Ganti dengan Gradien] -->
-  <!-- <div id="canvas-container" class="hidden md:block fixed inset-0 z-0 pointer-events-none"></div>
-  <div class="block md:hidden fixed inset-0 z-0 bg-gradient-to-b from-[#050811] to-[#0a1128] pointer-events-none"></div> -->
   <div id="canvas-container" class="fixed inset-0 z-0 pointer-events-none"></div>
 
   <!-- ==========================================
@@ -120,13 +118,17 @@
           class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
           Pengertian
         </a>
-        <a href="#materi"
-          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
-          Mitra
-        </a>
         <a href="#komparasi"
           class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
           Evolusi
+        </a>
+        <a href="#karakteristik-editorial"
+          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
+          Karakteristik
+        </a>
+        <a href="#keunggulan-cloud"
+          class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
+          Keunggulan
         </a>
         <a href="#layanan"
           class="nav-link text-sm text-gray-400 hover:text-white font-medium transition-colors duration-300">
@@ -137,13 +139,9 @@
 
     <!-- MAIN HERO CONTENT -->
     <main class="w-full max-w-4xl mx-auto px-6 text-center my-auto py-12 flex flex-col items-center justify-center">
-      <div
-        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-xs font-medium text-blue-300 mb-6 border border-blue-500/30 interactive">
-        <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-        Global Server Network Online
-      </div>
 
-      <div class="relative inline-block mb-8 interactive" id="focus-container">
+      <!-- Container Judul & Efek Kotak (Corners Tetap Dipertahankan) -->
+      <div class="relative inline-block mb-6 interactive" id="focus-container">
         <div id="focus-box" class="focus-bracket opacity-0">
           <div class="corner top-left"></div>
           <div class="corner top-right"></div>
@@ -159,12 +157,43 @@
         </h1>
       </div>
 
-      <div class="flex flex-col sm:flex-row items-center gap-4 interactive">
-        <a href="#materi"
+      <!-- Daftar Nama Kelompok -->
+      <div class="relative z-10 flex flex-col items-center mb-10 w-full max-w-2xl">
+        <p class="text-blue-500/80 text-xs sm:text-sm font-semibold tracking-widest uppercase mb-4">
+          Kelompok 5
+        </p>
+
+        <!-- Grid untuk 6 Anggota -->
+        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-gray-300 font-medium text-sm sm:text-base">
+          <li class="flex items-center gap-2 hover:text-white transition-colors cursor-default">
+            <span class="text-blue-500/50">•</span> Abil Arqam P. / 1
+          </li>
+          <li class="flex items-center gap-2 hover:text-white transition-colors cursor-default">
+            <span class="text-blue-500/50">•</span> Dinda Envira R. / 11
+          </li>
+          <li class="flex items-center gap-2 hover:text-white transition-colors cursor-default">
+            <span class="text-blue-500/50">•</span> Kesya Nabila N. / 23
+          </li>
+          <li class="flex items-center gap-2 hover:text-white transition-colors cursor-default">
+            <span class="text-blue-500/50">•</span> Kharisma Hargo K / 24
+          </li>
+          <li class="flex items-center gap-2 hover:text-white transition-colors cursor-default">
+            <span class="text-blue-500/50">•</span> Muhammad Fathan N. / 26
+          </li>
+          <li class="flex items-center gap-2 hover:text-white transition-colors cursor-default">
+            <span class="text-blue-500/50">•</span> Wildan Maulana K. / 35
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div class="relative z-10 flex flex-col sm:flex-row items-center gap-4 interactive">
+        <a href="#apa-itu-cloud"
           class="glass-panel w-full sm:w-auto text-gray-200 hover:text-white font-semibold px-8 py-3.5 rounded-lg text-sm transition-all duration-300 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] bg-[#0b1329] md:bg-transparent">
           Get Started
         </a>
       </div>
+
     </main>
   </div>
 
@@ -364,8 +393,8 @@
   <div class="relative w-full bg-[#070a12]">
 
     <!-- ==========================================
-        SECTION 1: APA ITU CLOUD COMPUTING? (STICKY LAYER)
-  ========================================== -->
+     SECTION 1: APA ITU CLOUD COMPUTING? (STICKY LAYER)
+========================================== -->
     <section id="apa-itu-cloud"
       class="sticky top-0 h-screen w-full bg-[#070a12] z-10 border-t border-white/[0.06] flex items-center justify-center">
 
@@ -422,74 +451,73 @@
           transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.4s ease-out;
         }
 
+        /* Bodi Logam Kontras (Simpel & Elegan) */
         .s-front {
-          width: 270px;
-          height: 50px;
+          width: 280px;
+          height: 48px;
           transform: translate(-50%, -50%) translateZ(95px);
-          background: #0d1322;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 6px;
+          background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          border-radius: 4px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 18px;
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 20px 30px -10px rgba(0, 0, 0, 0.8);
+          padding: 0 16px;
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 20px 30px -5px rgba(0, 0, 0, 0.9);
         }
 
         .s-top {
-          width: 270px;
+          width: 280px;
           height: 190px;
-          transform: translate(-50%, -50%) rotateX(90deg) translateZ(25px);
-          background: #111827;
-          border: 1px solid rgba(255, 255, 255, 0.04);
+          transform: translate(-50%, -50%) rotateX(90deg) translateZ(24px);
+          background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+          border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .s-bottom {
-          width: 270px;
+          width: 280px;
           height: 190px;
-          transform: translate(-50%, -50%) rotateX(-90deg) translateZ(25px);
-          background: #060911;
+          transform: translate(-50%, -50%) rotateX(-90deg) translateZ(24px);
+          background: #090d16;
         }
 
         .s-left {
           width: 190px;
-          height: 50px;
-          transform: translate(-50%, -50%) rotateY(-90deg) translateZ(135px);
-          background: #090e1a;
+          height: 48px;
+          transform: translate(-50%, -50%) rotateY(-90deg) translateZ(140px);
+          background: #151d2a;
+          border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .s-right {
           width: 190px;
-          height: 50px;
-          transform: translate(-50%, -50%) rotateY(90deg) translateZ(135px);
-          background: #090e1a;
+          height: 48px;
+          transform: translate(-50%, -50%) rotateY(90deg) translateZ(140px);
+          background: #151d2a;
+          border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .s-back {
-          width: 270px;
-          height: 50px;
+          width: 280px;
+          height: 48px;
           transform: translate(-50%, -50%) rotateY(180deg) translateZ(95px);
-          background: #060911;
+          background: #090d16;
         }
 
+        /* Lampu Server Seragam (Warna Biru) */
         .indicator-bar {
           width: 4px;
-          height: 18px;
+          height: 16px;
           border-radius: 2px;
           background: #3b82f6;
-          box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+          box-shadow: 0 0 8px #3b82f6;
         }
 
-        .status-group {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .line-detail {
-          width: 90px;
+        .server-line {
+          flex: 1;
           height: 2px;
-          background: rgba(255, 255, 255, 0.08);
+          margin: 0 16px;
+          background: rgba(255, 255, 255, 0.1);
           border-radius: 1px;
         }
 
@@ -498,24 +526,16 @@
           gap: 6px;
         }
 
-        .dot {
+        .dot-blue {
           width: 5px;
           height: 5px;
           border-radius: 50%;
-        }
-
-        .dot-blue {
           background: #3b82f6;
           box-shadow: 0 0 6px #3b82f6;
         }
 
-        .dot-emerald {
-          background: #10b981;
-          box-shadow: 0 0 6px #10b981;
-        }
-
         .dot-pulse {
-          animation: soft-pulse 2s infinite ease-in-out;
+          animation: soft-pulse 1.8s infinite ease-in-out;
         }
 
         @keyframes soft-pulse {
@@ -565,11 +585,7 @@
 
           <!-- Kiri: Text Content -->
           <div class="space-y-6 text-center lg:text-left" data-aos="fade-up" data-aos-duration="800">
-            <div
-              class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono tracking-wider uppercase">
-              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span>
-              Fundamental Architecture
-            </div>
+
 
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
               Apa Itu <br class="hidden sm:block" />
@@ -587,10 +603,12 @@
             </p>
           </div>
 
-          <!-- Kanan: 3D Server Rack -->
+          <!-- Kanan: Simple Metallic Server Rack -->
           <div class="w-full" data-aos="stack-rack" data-aos-duration="1000" data-aos-once="false">
             <div class="scene-container">
               <div class="rack-assembly">
+
+                <!-- Server Unit 1 -->
                 <div class="server-unit slot-1">
                   <div class="face s-top"></div>
                   <div class="face s-bottom"></div>
@@ -599,16 +617,15 @@
                   <div class="face s-back"></div>
                   <div class="face s-front">
                     <div class="indicator-bar"></div>
-                    <div class="status-group">
-                      <div class="line-detail"></div>
-                      <div class="status-dots">
-                        <div class="dot dot-blue"></div>
-                        <div class="dot dot-emerald dot-pulse"></div>
-                      </div>
+                    <div class="server-line"></div>
+                    <div class="status-dots">
+                      <div class="dot-blue"></div>
+                      <div class="dot-blue dot-pulse"></div>
                     </div>
                   </div>
                 </div>
 
+                <!-- Server Unit 2 -->
                 <div class="server-unit slot-2">
                   <div class="face s-top"></div>
                   <div class="face s-bottom"></div>
@@ -616,18 +633,16 @@
                   <div class="face s-right"></div>
                   <div class="face s-back"></div>
                   <div class="face s-front">
-                    <div class="indicator-bar"
-                      style="background: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);"></div>
-                    <div class="status-group">
-                      <div class="line-detail"></div>
-                      <div class="status-dots">
-                        <div class="dot dot-emerald"></div>
-                        <div class="dot dot-blue dot-pulse"></div>
-                      </div>
+                    <div class="indicator-bar"></div>
+                    <div class="server-line"></div>
+                    <div class="status-dots">
+                      <div class="dot-blue"></div>
+                      <div class="dot-blue dot-pulse"></div>
                     </div>
                   </div>
                 </div>
 
+                <!-- Server Unit 3 -->
                 <div class="server-unit slot-3">
                   <div class="face s-top"></div>
                   <div class="face s-bottom"></div>
@@ -636,15 +651,14 @@
                   <div class="face s-back"></div>
                   <div class="face s-front">
                     <div class="indicator-bar"></div>
-                    <div class="status-group">
-                      <div class="line-detail"></div>
-                      <div class="status-dots">
-                        <div class="dot dot-blue"></div>
-                        <div class="dot dot-blue dot-pulse"></div>
-                      </div>
+                    <div class="server-line"></div>
+                    <div class="status-dots">
+                      <div class="dot-blue"></div>
+                      <div class="dot-blue dot-pulse"></div>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -671,15 +685,15 @@
           <div class="flex items-center gap-4 mb-6">
             <div class="h-px w-12 bg-blue-500/80"></div>
             <span class="font-mono text-[10px] sm:text-xs tracking-[0.25em] text-slate-400 uppercase">
-              Infrastructure Archive // Timeline
+              Infrastructure Timeline
             </span>
           </div>
           <h2 class="text-4xl sm:text-6xl font-display font-medium text-slate-100 tracking-tight leading-tight">
             Evolusi Arsitektur.
           </h2>
           <p class="text-slate-400 text-sm sm:text-base mt-6 max-w-2xl font-light leading-relaxed">
-            Transisi struktural dari pengelolaan *bare-metal* secara mandiri menuju elastisitas ekosistem komputasi awan
-            modern.
+            Perjalanan perubahan cara perusahaan mengelola sistem komputer mereka, dari yang sepenuhnya fisik menjadi
+            serba digital dan fleksibel.
           </p>
         </div>
 
@@ -698,10 +712,10 @@
             <div
               class="tech-node group relative grid grid-cols-1 md:grid-cols-[200px_40px_1fr] gap-6 md:gap-0 items-start">
               <div class="node-meta pl-12 md:pl-0 md:pr-10 md:text-right pt-0.5 relative z-20 md:mt-[2px]">
-                <span class="font-mono text-xs text-slate-500 block mb-1">EPOCH: 1990-2000</span>
+                <span class="font-mono text-xs text-slate-500 block mb-1">ERA: 1990an</span>
                 <h3
                   class="text-xl md:text-2xl font-medium text-slate-200 group-hover:text-white transition-colors duration-300">
-                  On-Premise</h3>
+                  Sistem Lokal</h3>
               </div>
 
               <div class="absolute left-0 md:relative md:flex justify-center z-20 mt-[6px]">
@@ -718,15 +732,16 @@
                   <div
                     class="flex items-center gap-3 font-mono text-[10px] text-slate-500 mb-5 uppercase tracking-widest">
                     <span class="flex items-center gap-1.5">
-                      <span class="w-1.5 h-1.5 bg-red-500/80 rounded-full"></span> Status: Legacy
+                      <span class="w-1.5 h-1.5 bg-red-500/80 rounded-full"></span>
                     </span>
                     <span>|</span>
-                    <span>CapEx Heavy</span>
+                    <span>Sistem Lokal</span>
                   </div>
                   <p class="text-slate-400 text-sm leading-loose">
-                    Organisasi wajib melakukan pengadaan, instalasi, dan pemeliharaan server fisik (bare-metal) secara
-                    mandiri di fasilitas internal. Membutuhkan belanja modal yang masif dan waktu *deployment*
-                    berbulan-bulan.
+                    Di era 90-an, perusahaan masih menggunakan sistem lokal di mana mereka harus membeli, merakit, dan
+                    merawat mesin server fisik secara mandiri di kantor mereka sendiri. Pendekatan ini terbilang kaku
+                    karena membutuhkan modal awal yang sangat besar, dan proses persiapan dari pemesanan alat hingga
+                    mesin siap digunakan bisa memakan waktu berbulan-bulan.
                   </p>
                 </div>
               </div>
@@ -736,10 +751,10 @@
             <div
               class="tech-node group relative grid grid-cols-1 md:grid-cols-[200px_40px_1fr] gap-6 md:gap-0 items-start">
               <div class="node-meta pl-12 md:pl-0 md:pr-10 md:text-right pt-0.5 relative z-20 md:mt-[2px]">
-                <span class="font-mono text-xs text-slate-500 block mb-1">EPOCH: 2001-2010</span>
+                <span class="font-mono text-xs text-slate-500 block mb-1">ERA: 2000an</span>
                 <h3
                   class="text-xl md:text-2xl font-medium text-slate-200 group-hover:text-white transition-colors duration-300">
-                  Virtualization</h3>
+                  Masa Transisi</h3>
               </div>
 
               <div class="absolute left-0 md:relative md:flex justify-center z-20 mt-[6px]">
@@ -756,15 +771,16 @@
                   <div
                     class="flex items-center gap-3 font-mono text-[10px] text-slate-500 mb-5 uppercase tracking-widest">
                     <span class="flex items-center gap-1.5">
-                      <span class="w-1.5 h-1.5 bg-amber-500/80 rounded-full"></span> Status: Transition
+                      <span class="w-1.5 h-1.5 bg-amber-500/80 rounded-full"></span>
                     </span>
                     <span>|</span>
-                    <span>Resource Optimized</span>
+                    <span>Virtualisasi</span>
                   </div>
                   <p class="text-slate-400 text-sm leading-loose">
-                    Implementasi layer *Hypervisor* (seperti VMware/KVM) mengizinkan satu mesin fisik dipecah menjadi
-                    multiple Virtual Machines (VM). Utilisasi perangkat keras meningkat drastis, memangkas *footprint*
-                    fisik data center.
+                    Memasuki tahun 2000-an, muncul teknologi virtualisasi yang menjadi solusi cerdas untuk menghemat
+                    ruang dan biaya perawatan. Dengan bantuan perangkat lunak khusus, satu mesin fisik kini bisa
+                    "dibelah" menjadi beberapa mesin virtual, sehingga penggunaan alat menjadi jauh lebih maksimal dan
+                    perusahaan tidak perlu lagi menyediakan ruangan luas hanya untuk menaruh tumpukan rak server.
                   </p>
                 </div>
               </div>
@@ -774,7 +790,7 @@
             <div
               class="tech-node group relative grid grid-cols-1 md:grid-cols-[200px_40px_1fr] gap-6 md:gap-0 items-start">
               <div class="node-meta pl-12 md:pl-0 md:pr-10 md:text-right pt-0.5 relative z-20 md:mt-[2px]">
-                <span class="font-mono text-xs text-blue-500/80 block mb-1">EPOCH: PRESENT</span>
+                <span class="font-mono text-xs text-blue-500/80 block mb-1">ERA: Sekarang</span>
                 <h3 class="text-xl md:text-2xl font-medium text-white transition-colors duration-300">Cloud Computing
                 </h3>
               </div>
@@ -795,15 +811,16 @@
                     <span class="flex items-center gap-1.5">
                       <span
                         class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]"></span>
-                      Status: Active standard
                     </span>
                     <span>|</span>
-                    <span>OpEx / Elastic</span>
+                    <span>Cloud Computing</span>
                   </div>
                   <p class="text-slate-300 text-sm leading-loose">
-                    Infrastruktur disediakan sebagai layanan (*Infrastructure as a Service*) melalui API. Kapasitas
-                    komputasi dapat di-skala (scale-up/down) secara otomatis dalam hitungan detik dengan model penagihan
-                    *pay-as-you-go*.
+                    Kini, kita berada di standar modern yaitu era Komputasi Awan, di mana infrastruktur IT tidak lagi
+                    diurus secara fisik melainkan disewa sebagai layanan digital. Sistem ini sangat lentur karena
+                    kapasitasnya bisa ditambah atau dikurangi secara otomatis dalam hitungan detik saat jumlah pengguna
+                    aplikasi melonjak, dan biayanya sangat efisien karena kita murni hanya membayar sesuai dengan
+                    kapasitas yang benar-benar kita gunakan.
                   </p>
                 </div>
               </div>
@@ -890,10 +907,10 @@
     <!-- MAIN TITLE (Sticky Header) -->
     <div class="absolute top-6 md:top-10 left-6 md:left-24 z-50 pointer-events-none mix-blend-difference">
       <h2 class="text-[10px] md:text-sm font-bold tracking-[0.3em] text-slate-300 uppercase opacity-70">
-        Arsitektur Fundamental
+        Karakteristik Fundamental
       </h2>
       <div class="text-base md:text-2xl font-bold tracking-tight text-white mt-1">
-        5 Pilar Cloud Computing
+        5 Syarat Cloud Computing
       </div>
     </div>
 
@@ -935,8 +952,8 @@
           </h3>
           <p
             class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
-            Kemandirian adalah kunci. Pengguna dapat secara instan menyediakan kapasitas komputasi secara sepihak tanpa
-            interaksi manusia.
+            Karakteristik di mana pengguna dapat secara sepihak dan otomatis mengatur serta menyediakan sumber daya
+            komputasi, seperti server dan penyimpanan, tanpa perlu berinteraksi langsung dengan penyedia layanan.
           </p>
         </div>
       </article>
@@ -969,8 +986,8 @@
           </h3>
           <p
             class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
-            Akses tanpa batas geografi. Kapabilitas layanan tersedia di seluruh jaringan dan dapat diakses dari berbagai
-            jenis perangkat endpoint.
+            Layanan tersedia melalui jaringan internet dan dapat diakses menggunakan mekanisme standar dari berbagai
+            perangkat platform klien, seperti smartphone, tablet, laptop, hingga workstation.
           </p>
         </div>
       </article>
@@ -1003,8 +1020,8 @@
           </h3>
           <p
             class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
-            Sistem berbagi secara cerdas. Sumber daya komputasi digabungkan untuk melayani multi-penyewa dengan model
-            fisik dan virtual dinamis.
+            Sumber daya komputasi disatukan untuk melayani banyak konsumen menggunakan model multi-tenant. Sumber daya
+            fisik dan virtual dialokasikan dan ditarik kembali secara dinamis sesuai permintaan pengguna.
           </p>
         </div>
       </article>
@@ -1037,8 +1054,8 @@
           </h3>
           <p
             class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
-            Sistem yang bernapas. Kapasitas dapat dialokasikan dan dirilis secara elastis untuk mengimbangi fluktuasi
-            demand.
+            Kemampuan sumber daya yang dapat dengan cepat dan elastis disediakan (scale up) atau dikurangi (scale down)
+            secara otomatis untuk mengimbangi fluktuasi beban kerja yang dinamis.
           </p>
         </div>
       </article>
@@ -1071,8 +1088,9 @@
           </h3>
           <p
             class="gsap-text text-slate-300 text-lg sm:text-xl md:text-3xl leading-relaxed font-light max-w-2xl bg-[#03060D]/60 md:bg-transparent rounded-xl p-3 md:p-0">
-            Transparansi meteran utilitas. Penggunaan cloud dimonitor, dikontrol, dan dilaporkan secara otomatis bagi
-            pengguna.
+            Sistem cloud mengontrol dan mengoptimalkan sumber daya secara otomatis melalui kemampuan pengukuran
+            (metering). Penggunaan dapat dipantau, dikendalikan, dan dilaporkan sebagai bentuk transparansi layanan
+            (pay-as-you-go).
           </p>
         </div>
       </article>
@@ -1272,10 +1290,13 @@
     }
   </style>
 
-  
+
   <!-- ==========================================
      SECTION 3: KEUNGGULAN CLOUD (GLOSSY REACT BITS STYLE)
   ========================================== -->
+  <!-- ==========================================
+  SECTION 3: KEUNGGULAN CLOUD (GLOSSY REACT BITS STYLE)
+========================================== -->
   <section id="keunggulan-cloud"
     class="relative z-20 w-full bg-[#03060D] py-24 md:py-32 border-t border-white/[0.05] font-sans overflow-hidden text-slate-200">
 
@@ -1292,22 +1313,12 @@
     <div class="max-w-7xl mx-auto px-6 relative z-30">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-10">
 
-        <!-- Kiri: Headline & Deskripsi -->
-        <div class="lg:col-span-5 flex flex-col justify-start pt-2">
+        <!-- Kiri: Headline & Deskripsi (Ditengahkan secara vertikal) -->
+        <div class="lg:col-span-5 flex flex-col justify-center h-full">
           <h2 data-aos="fade-up"
             class="text-4xl md:text-5xl lg:text-[3.5rem] font-display font-bold text-white leading-[1.15] tracking-tight mb-8">
-            Infrastruktur masa depan, siap hari ini
+            Keunggulan Utama Cloud Computing
           </h2>
-
-          <p data-aos="fade-up" data-aos-delay="100" class="text-slate-300 text-lg leading-relaxed mb-6 font-light">
-            Pendekatan cloud modern menghapus batasan fisik. Setiap <em>resource</em> dirancang untuk menopang beban
-            kerja kritikal dengan tingkat ketersediaan tinggi, memberikan Anda pondasi digital yang kokoh.
-          </p>
-
-          <p data-aos="fade-up" data-aos-delay="200" class="text-slate-300 text-lg leading-relaxed mb-10 font-light">
-            Tim IT kini bisa berfokus pada inovasi dan pengembangan produk. Penyedia layanan cloud menangani
-            kompleksitas infrastruktur, skalabilitas, dan keamanan secara otomatis di belakang layar.
-          </p>
 
           <div data-aos="fade-up" data-aos-delay="300">
             <a href="#layanan"
@@ -1336,91 +1347,74 @@
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
-            NILAI UTAMA CLOUD
+            KEUNGGULAN UTAMA CLOUD
           </div>
 
           <!-- 2x2 Grid Cards -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
 
-            <!-- Card 1 -->
+            <!-- Card 1: Efisiensi Biaya -->
             <div data-aos="fade-up" data-aos-delay="100"
-              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
-              <!-- Glossy Hover Effect (The Magic) -->
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-center min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              <!-- Glossy Hover Effect -->
               <div
                 class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
               </div>
 
-              <!-- Content -->
-              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
-                Efisiensi Biaya (OpEx) Tanpa Investasi Awal
+              <h3 class="text-[1.25rem] font-bold text-white leading-snug relative z-10 transition-colors mb-3">
+                Efisiensi Biaya
               </h3>
-              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
-                <svg class="w-4 h-4 text-blue-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                  </path>
-                </svg>
-                <span>Pay-as-you-go model</span>
-              </div>
+              <p class="text-sm text-slate-400 leading-relaxed relative z-10">
+                Menghilangkan biaya besar untuk membeli perangkat keras keras komputer. Pengguna hanya perlu membayar
+                sesuai dengan layanan yang benar-benar digunakan.
+              </p>
             </div>
 
-            <!-- Card 2 -->
+            <!-- Card 2: Skalabilitas -->
             <div data-aos="fade-up" data-aos-delay="200"
-              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-center min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
               <div
                 class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
               </div>
 
-              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
-                Skalabilitas Elastis & Auto-Scaling Otomatis
+              <h3 class="text-[1.25rem] font-bold text-white leading-snug relative z-10 transition-colors mb-3">
+                Kapasitas Fleksibel
               </h3>
-              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
-                <svg class="w-4 h-4 text-cyan-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
-                  </path>
-                </svg>
-                <span>Scale in seconds</span>
-              </div>
+              <p class="text-sm text-slate-400 leading-relaxed relative z-10">
+                Kapasitas penyimpanan dan performa sistem dapat dengan mudah ditambah atau dikurangi kapan saja,
+                menyesuaikan dengan kebutuhan Pengguna.
+              </p>
             </div>
 
-            <!-- Card 3 -->
+            <!-- Card 3: Aksesibilitas -->
             <div data-aos="fade-up" data-aos-delay="300"
-              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-center min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
               <div
                 class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
               </div>
 
-              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
-                Keamanan Lapis Ganda Kelas Enterprise
+              <h3 class="text-[1.25rem] font-bold text-white leading-snug relative z-10 transition-colors mb-3">
+                Aksesibilitas Global
               </h3>
-              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
-                <svg class="w-4 h-4 text-emerald-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
-                  </path>
-                </svg>
-                <span>End-to-end encryption</span>
-              </div>
+              <p class="text-sm text-slate-400 leading-relaxed relative z-10">
+                Data dan aplikasi dapat diakses dari mana saja dan menggunakan perangkat apa saja, asalkan terhubung
+                dengan koneksi internet.
+              </p>
             </div>
 
-            <!-- Card 4 -->
+            <!-- Card 4: Keamanan & Backup -->
             <div data-aos="fade-up" data-aos-delay="400"
-              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-between min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+              class="group relative overflow-hidden bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl p-7 flex flex-col justify-center min-h-[240px] hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 cursor-pointer shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
               <div
                 class="absolute inset-y-0 -left-[100%] w-full bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -skew-x-12 group-hover:left-[200%] transition-all duration-700 ease-in-out pointer-events-none z-0">
               </div>
 
-              <h3 class="text-[1.35rem] font-bold text-white leading-snug relative z-10 transition-colors">
-                Ketersediaan Tinggi dengan Uptime 99.9%
+              <h3 class="text-[1.25rem] font-bold text-white leading-snug relative z-10 transition-colors mb-3">
+                Keamanan dan Pemulihan
               </h3>
-              <div class="flex items-center gap-2 mt-8 text-slate-400 text-sm font-medium relative z-10">
-                <svg class="w-4 h-4 text-purple-500/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                  </path>
-                </svg>
-                <span>Global redundancy</span>
-              </div>
+              <p class="text-sm text-slate-400 leading-relaxed relative z-10">
+                Menyediakan sistem pencadangan data otomatis sehingga data tetap aman dan mudah dipulihkan jika terjadi
+                masalah atau kerusakan.</p>
             </div>
 
           </div>
@@ -1431,248 +1425,304 @@
   </section>
 
   <!-- ==========================================
-     SECTION 2: MODEL LAYANAN (NEXT.JS / VERCEL INSPIRED)
+     SECTION 2: MODEL LAYANAN (THEME ACCENT, NO 100VH, RESPONSIVE CPU)
      ========================================== -->
   <section id="layanan"
     class="relative z-20 w-full bg-[#030712] border-y border-white/[0.08] py-24 md:py-32 font-sans overflow-hidden text-slate-200">
 
-    <!-- Background Grid Minimalis & Radial Beam -->
+    <!-- Background Grid & Radial Glow (Netral/Putih) -->
     <div class="absolute inset-0 pointer-events-none z-0">
       <div
         class="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:16px_16px] opacity-40">
       </div>
       <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-white/5 rounded-full blur-[120px]">
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] bg-white/5 rounded-full blur-[120px]">
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-6 relative z-10">
+    <!-- Container Utama -->
+    <div class="max-w-6xl mx-auto px-6 relative z-10 w-full">
 
       <!-- Section Header -->
-      <div class="text-center max-w-2xl mx-auto mb-16 md:mb-20">
+      <div class="text-center max-w-2xl mx-auto mb-16 md:mb-20 relative z-20">
         <h2 data-aos="fade-up"
           class="font-display font-semibold text-3xl md:text-[2.75rem] text-white tracking-tight mb-4 leading-tight">
-          Model Layanan Cloud
+          Model Layanan Komputasi Awan
         </h2>
         <p data-aos="fade-up" data-aos-delay="100" class="text-slate-400 text-sm md:text-base font-light">
-          Arsitektur infrastruktur terdistribusi yang dapat disesuaikan dengan kebutuhan Anda.
+          Komputasi awan dibagi menjadi tiga jenis layanan utama berdasarkan tingkat kontrol dan pengelolaan sistem.
+          Pengguna dapat memilih jenis layanan yang sesuai dengan tingkat kebutuhan teknis masing-masing.
         </p>
       </div>
 
-      <!-- Central Sleek Physical Server & 90-Degree White Light Cables -->
-      <div class="hidden md:flex flex-col items-center justify-center mb-16 relative w-full" data-aos="fade-up"
-        data-aos-delay="150">
+      <!-- Area Relatif untuk Processor, Sirkuit, dan Card -->
+      <div class="relative w-full pt-4 pb-4">
 
-        <!-- SVG Cables (White Laser Flow Effect) -->
+        <!-- ==========================================
+             SVG CIRCUIT: HUBUNGAN CPU KE KARTU & BACKGROUND (WARNA PUTIH)
+             (Hanya tampil di Desktop, disembunyikan di Mobile)
+             ========================================== -->
         <svg
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[900px] h-[260px] pointer-events-none z-0"
-          viewBox="0 0 900 260" fill="none">
+          class="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[700px] pointer-events-none hidden md:block z-0"
+          viewBox="0 0 1200 700" fill="none">
           <defs>
-            <!-- Gradient Pulsa Putih -->
-            <linearGradient id="white-laser-flow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id="white-circuit" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
-              <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+              <stop offset="50%" stop-color="#ffffff" stop-opacity="0.8" />
               <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
             </linearGradient>
-
-            <!-- Glow Filter untuk Jalur Putih -->
             <filter id="glow-white" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feGaussianBlur stdDeviation="4" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
 
-          <!-- Base Circuit Lines (Jalur Dim) -->
-          <path d="M 420,50 L 420,110 L 150,110 L 150,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-          <path d="M 435,70 L 435,130 L 180,130 L 180,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-          <path d="M 445,85 L 435,85 L 435,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-          <path d="M 455,85 L 465,85 L 465,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-          <path d="M 465,70 L 465,130 L 720,130 L 720,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
-          <path d="M 480,50 L 480,110 L 750,110 L 750,260" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"
-            stroke-dasharray="4 4" />
+          <!-- JALUR MENUJU BACKGROUND -->
+          <path d="M 450,110 L 350,110 L 300,60 L 50,60" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+          <path d="M 450,110 L 350,110 L 300,60 L 50,60" stroke="url(#white-circuit)" stroke-width="1.5"
+            filter="url(#glow-white)" stroke-dasharray="150" stroke-dashoffset="300" class="animate-laser-flow" />
 
-          <!-- Animated White Laser Pulses -->
-          <path d="M 420,50 L 420,110 L 150,110 L 150,260" stroke="url(#white-laser-flow)" stroke-width="2"
-            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240" class="animate-laser-flow" />
-          <path d="M 435,70 L 435,130 L 180,130 L 180,260" stroke="url(#white-laser-flow)" stroke-width="2"
-            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
-            class="animate-laser-flow [animation-delay:0.6s]" />
+          <path d="M 450,160 L 250,160 L 200,210 L 0,210" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+          <path d="M 450,160 L 250,160 L 200,210 L 0,210" stroke="url(#white-circuit)" stroke-width="1.5"
+            filter="url(#glow-white)" stroke-dasharray="150" stroke-dashoffset="300"
+            class="animate-laser-flow [animation-delay:0.7s]" />
 
-          <path d="M 445,85 L 435,85 L 435,260" stroke="url(#white-laser-flow)" stroke-width="2"
-            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+          <path d="M 750,110 L 850,110 L 900,60 L 1150,60" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+          <path d="M 750,110 L 850,110 L 900,60 L 1150,60" stroke="url(#white-circuit)" stroke-width="1.5"
+            filter="url(#glow-white)" stroke-dasharray="150" stroke-dashoffset="300"
             class="animate-laser-flow [animation-delay:0.3s]" />
-          <path d="M 455,85 L 465,85 L 465,260" stroke="url(#white-laser-flow)" stroke-width="2"
-            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
+
+          <path d="M 750,160 L 950,160 L 1000,210 L 1200,210" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" />
+          <path d="M 750,160 L 950,160 L 1000,210 L 1200,210" stroke="url(#white-circuit)" stroke-width="1.5"
+            filter="url(#glow-white)" stroke-dasharray="150" stroke-dashoffset="300"
             class="animate-laser-flow [animation-delay:0.9s]" />
 
-          <path d="M 465,70 L 465,130 L 720,130 L 720,260" stroke="url(#white-laser-flow)" stroke-width="2"
-            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
-            class="animate-laser-flow [animation-delay:0.4s]" />
-          <path d="M 480,50 L 480,110 L 750,110 L 750,260" stroke="url(#white-laser-flow)" stroke-width="2"
-            filter="url(#glow-white)" stroke-dasharray="120" stroke-dashoffset="240"
-            class="animate-laser-flow [animation-delay:0.8s]" />
+          <!-- JALUR UTAMA MENUJU KARTU LAYANAN -->
+          <!-- Ke Kartu 1 (IaaS) -->
+          <path d="M 520,240 L 520,290 L 480,330 L 200,330 L 200,380" stroke="rgba(255,255,255,0.08)"
+            stroke-width="2" />
+          <path d="M 520,240 L 520,290 L 480,330 L 200,330 L 200,380" stroke="url(#white-circuit)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="250" stroke-dashoffset="500"
+            class="animate-laser-flow [animation-delay:0.1s]" />
+          <circle cx="200" cy="380" r="3.5" fill="#ffffff" class="animate-pulse shadow-[0_0_8px_#ffffff]" />
+
+          <!-- Ke Kartu 2 (PaaS) -->
+          <path d="M 600,240 L 600,380" stroke="rgba(255,255,255,0.08)" stroke-width="2" />
+          <path d="M 600,240 L 600,380" stroke="url(#white-circuit)" stroke-width="2" filter="url(#glow-white)"
+            stroke-dasharray="250" stroke-dashoffset="500" class="animate-laser-flow [animation-delay:0.5s]" />
+          <circle cx="600" cy="380" r="3.5" fill="#ffffff" class="animate-pulse shadow-[0_0_8px_#ffffff]" />
+
+          <!-- Ke Kartu 3 (SaaS) -->
+          <path d="M 680,240 L 680,290 L 720,330 L 1000,330 L 1000,380" stroke="rgba(255,255,255,0.08)"
+            stroke-width="2" />
+          <path d="M 680,240 L 680,290 L 720,330 L 1000,330 L 1000,380" stroke="url(#white-circuit)" stroke-width="2"
+            filter="url(#glow-white)" stroke-dasharray="250" stroke-dashoffset="500"
+            class="animate-laser-flow [animation-delay:0.2s]" />
+          <circle cx="1000" cy="380" r="3.5" fill="#ffffff" class="animate-pulse shadow-[0_0_8px_#ffffff]" />
         </svg>
 
-        <!-- Physical Server Chassis (No Text, Purely Visual) -->
-        <div
-          class="relative z-10 w-72 bg-[#090d16]/90 backdrop-blur-xl border border-white/10 rounded-xl p-3 shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col gap-2.5 transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] group">
+        <!-- ==========================================
+             REALISTIC AMD RYZEN THREADRIPPER CPU
+             ========================================== -->
+        <div class="hidden md:flex flex-col items-center justify-center relative z-20 mb-20 group" data-aos="zoom-in"
+          data-aos-delay="150">
 
-          <!-- Subtle Top Glow Line -->
+          <!-- Motherboard Socket Base -->
           <div
-            class="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent">
-          </div>
+            class="relative w-[380px] h-[260px] bg-[#0b0e14] border border-white/5 rounded-xl p-3 shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center perspective-1000">
 
-          <!-- Server Blade 1 (Compute Node) -->
-          <div
-            class="h-10 bg-white/[0.02] border border-white/[0.05] rounded flex items-center px-3 justify-between shadow-inner">
-            <!-- Power & Status LEDs -->
-            <div class="flex items-center gap-2">
-              <!-- Power Button / LED -->
-              <div
-                class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] border border-emerald-300/50">
-              </div>
-              <!-- Fault LED (Off) -->
-              <div class="w-1.5 h-1.5 rounded-full bg-slate-800 border border-black"></div>
-            </div>
+            <!-- Socket TR4/sTRX4 Metal Retention Frame -->
+            <div
+              class="relative w-full h-full bg-gradient-to-b from-[#2a2d35] to-[#1a1c23] rounded-lg border border-[#3f4452] shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] flex items-center justify-center p-3">
 
-            <!-- Hot-swap Drive Bays -->
-            <div class="flex gap-1.5">
-              <!-- Drive 1 (Active) -->
-              <div class="w-3.5 h-6 bg-black/40 border border-white/10 rounded-sm flex flex-col justify-end p-0.5">
-                <div class="w-full h-1 bg-blue-400/80 rounded-[1px] animate-pulse"></div>
+              <!-- Torx Screws (1, 2, 3) -->
+              <!-- Screw 1 -->
+              <div
+                class="absolute top-4 right-10 w-6 h-6 rounded-full bg-gradient-to-br from-slate-300 to-slate-500 border border-slate-700 shadow-md flex items-center justify-center">
+                <div class="w-2.5 h-2.5 bg-slate-800 rotate-45 transform"
+                  style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                <span class="absolute -top-3.5 text-[9px] font-bold text-slate-400">1</span>
               </div>
-              <!-- Drive 2 (Active) -->
-              <div class="w-3.5 h-6 bg-black/40 border border-white/10 rounded-sm flex flex-col justify-end p-0.5">
-                <div class="w-full h-1 bg-blue-400/80 rounded-[1px] animate-pulse [animation-delay:200ms]"></div>
+              <!-- Screw 2 -->
+              <div
+                class="absolute top-4 left-10 w-6 h-6 rounded-full bg-gradient-to-br from-slate-300 to-slate-500 border border-slate-700 shadow-md flex items-center justify-center">
+                <div class="w-2.5 h-2.5 bg-slate-800 rotate-45 transform"
+                  style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                <span class="absolute -top-3.5 text-[9px] font-bold text-slate-400">2</span>
               </div>
-              <!-- Drive 3 (Active) -->
-              <div class="w-3.5 h-6 bg-black/40 border border-white/10 rounded-sm flex flex-col justify-end p-0.5">
-                <div class="w-full h-1 bg-blue-400/80 rounded-[1px] animate-pulse [animation-delay:400ms]"></div>
+              <!-- Screw 3 -->
+              <div
+                class="absolute bottom-4 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-br from-slate-300 to-slate-500 border border-slate-700 shadow-md flex items-center justify-center">
+                <div class="w-2.5 h-2.5 bg-slate-800 rotate-45 transform"
+                  style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                <span class="absolute -bottom-3.5 text-[9px] font-bold text-slate-400">3</span>
               </div>
-              <!-- Drive 4 (Empty/Standby) -->
-              <div class="w-3.5 h-6 bg-black/40 border border-white/5 rounded-sm flex flex-col justify-end p-0.5">
-                <div class="w-full h-1 bg-slate-700 rounded-[1px]"></div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Server Blade 2 (Network & Cooling) -->
-          <div
-            class="h-10 bg-white/[0.02] border border-white/[0.05] rounded flex items-center px-3 justify-between shadow-inner">
-            <!-- Network Ports (NIC) -->
-            <div class="flex gap-2.5">
-              <!-- Port 1 -->
+              <!-- Orange Plastic Carrier Frame -->
               <div
-                class="w-5 h-4 bg-black/60 border border-white/10 rounded-sm relative flex justify-center items-end pb-[1px]">
-                <div class="w-3 h-1 bg-black/80 rounded-[1px]"></div>
-                <div class="absolute -top-0.5 -right-0.5 w-1 h-1 bg-amber-400 rounded-full animate-ping"></div>
-              </div>
-              <!-- Port 2 -->
-              <div
-                class="w-5 h-4 bg-black/60 border border-white/10 rounded-sm relative flex justify-center items-end pb-[1px]">
-                <div class="w-3 h-1 bg-black/80 rounded-[1px]"></div>
-                <div
-                  class="absolute -top-0.5 -right-0.5 w-1 h-1 bg-emerald-400 rounded-full animate-ping [animation-delay:300ms]">
+                class="w-[92%] h-[88%] bg-[#e85d04] rounded-sm p-[2px] shadow-[inset_0_0_5px_rgba(0,0,0,0.6)] relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
+
+                <!-- CPU Green/Grey Substrate (PCB) -->
+                <div class="w-full h-full bg-[#1b1f1c] rounded-[2px] p-[5px] relative">
+
+                  <!-- Pin 1 Indicator (Gold Triangle) -->
+                  <div
+                    class="absolute bottom-2 left-2 w-0 h-0 border-l-[6px] border-l-transparent border-b-[6px] border-b-yellow-500 border-r-[6px] border-r-transparent -rotate-45">
+                  </div>
+
+                  <!-- SMD Capacitors (Detail Komponen Kecil) -->
+                  <div class="absolute top-2 left-1/2 -translate-x-1/2 flex gap-1">
+                    <div class="w-1 h-2 bg-[#a38052] rounded-[1px]"></div>
+                    <div class="w-1 h-2 bg-[#a38052] rounded-[1px]"></div>
+                    <div class="w-1 h-2 bg-[#a38052] rounded-[1px]"></div>
+                    <div class="w-1 h-2 bg-[#a38052] rounded-[1px]"></div>
+                  </div>
+
+                  <!-- Machined Metal IHS (Integrated Heat Spreader) -->
+                  <div
+                    class="w-full h-full bg-gradient-to-br from-[#e0e2e8] via-[#cfd2d8] to-[#999ca3] rounded-[2px] shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-2px_6px_rgba(0,0,0,0.3),0_4px_10px_rgba(0,0,0,0.7)] border-t border-l border-white/60 border-r border-b border-gray-400/80 flex flex-col items-center justify-center relative overflow-hidden">
+
+                    <!-- Metallic Shine Reflection on Hover -->
+                    <div
+                      class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 opacity-0 group-hover:opacity-100 transform -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-[1.5s] ease-in-out pointer-events-none">
+                    </div>
+
+                    <!-- Authentic Laser Etched Engraving -->
+                    <div class="flex flex-col items-center select-none"
+                      style="text-shadow: 0px 1px 0px rgba(255,255,255,0.6);">
+
+                      <!-- AMD Logo -->
+                      <div class="flex items-center w-full justify-center mb-1">
+                        <span class="text-[#3f3f46] font-bold text-lg tracking-[0.2em] flex items-center gap-1.5">
+                          <svg class="w-4 h-4 text-[#3f3f46]" viewBox="0 0 24 24" fill="currentColor"
+                            style="filter: drop-shadow(0px 1px 0px rgba(255,255,255,0.6));">
+                            <path
+                              d="M3.5 3h17v17H3.5V3zM5 5v14h14V5H5zm2 2h3v3H7V7zm5 0h5v3h-5V7zM7 12h3v5H7v-5zm5 0h5v5h-5v-5z" />
+                          </svg>
+                          AMD
+                        </span>
+                      </div>
+
+                      <!-- RYZEN Swoosh/Enso & Text -->
+                      <div class="flex items-center gap-2">
+                        <span
+                          class="text-[#3f3f46] font-black text-[3.25rem] tracking-tighter leading-none">RYZEN</span>
+                      </div>
+
+                      <!-- THREADRIPPER -->
+                      <span
+                        class="text-[#3f3f46] font-bold text-sm tracking-[0.4em] mt-1 ml-2 uppercase">THREADRIPPER</span>
+                    </div>
+
+                    <!-- 2D Matrix Code (Bottom Right) -->
+                    <div
+                      class="absolute bottom-3 right-3 w-7 h-7 border border-[#3f3f46]/30 p-[1px] flex flex-wrap shadow-[0_1px_0_rgba(255,255,255,0.4)]">
+                      <div class="w-1/3 h-1/3 bg-[#3f3f46]/80"></div>
+                      <div class="w-1/3 h-1/3"></div>
+                      <div class="w-1/3 h-1/3 bg-[#3f3f46]/80"></div>
+                      <div class="w-1/3 h-1/3"></div>
+                      <div class="w-1/3 h-1/3 bg-[#3f3f46]/80"></div>
+                      <div class="w-1/3 h-1/3 bg-[#3f3f46]/80"></div>
+                      <div class="w-1/3 h-1/3 bg-[#3f3f46]/80"></div>
+                      <div class="w-1/3 h-1/3 bg-[#3f3f46]/80"></div>
+                      <div class="w-1/3 h-1/3"></div>
+                    </div>
+
+                    <!-- Serial / Manufacturing Info (Top Left & Bottom Left) -->
+                    <span class="absolute top-3 left-3 text-[#3f3f46] text-[7px] font-mono font-bold leading-tight"
+                      style="text-shadow: 0px 1px 0px rgba(255,255,255,0.6);">
+                      100-000000011<br>
+                      BF 1942SUT<br>
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-[#3f3f46] text-[7px] font-mono font-bold leading-tight"
+                      style="text-shadow: 0px 1px 0px rgba(255,255,255,0.6);">
+                      DIFFUSED IN USA<br>
+                      © 2019 AMD
+                    </span>
+
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- Grill / Ventilation -->
-            <div class="flex gap-1.5">
-              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
-              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
-              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
-              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
-              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
-              <div class="w-1 h-5 bg-white/10 rounded-full shadow-inner"></div>
-            </div>
           </div>
-
         </div>
-      </div>
 
-      <!-- Cards Grid (Next.js Minimal Glass Card Style) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Kartu Model Layanan (Penjelasan Teks Sekolah) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-20">
 
-        <!-- Card 1: IaaS -->
-        <div data-aos="fade-up" data-aos-delay="200"
-          class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-          <div>
-            <div class="mb-8 flex items-center justify-between">
-              <div
-                class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01">
-                  </path>
-                </svg>
+          <!-- Card 1: IaaS -->
+          <div data-aos="fade-up" data-aos-delay="200"
+            class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+            <div>
+              <div class="mb-8 flex items-center justify-between">
+                <div
+                  class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01">
+                    </path>
+                  </svg>
+                </div>
               </div>
-              <span
-                class="text-slate-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 text-base">↗</span>
+
+              <h3 class="text-lg font-medium text-white mb-3">IaaS (Infrastructure as a Service)</h3>
+              <p class="text-slate-400 text-sm leading-relaxed font-light">
+                Layanan yang menyediakan infrastruktur komputasi dasar seperti server fisik, server virtual, jaringan,
+                dan ruang penyimpanan data. Pengguna memiliki hak kontrol penuh untuk memasang, mengatur, dan memelihara
+                sistem operasi serta aplikasi sesuai spesifikasi yang dibutuhkan.
+              </p>
             </div>
-
-            <h3 class="text-lg font-medium text-white mb-2">IaaS</h3>
-            <p class="text-slate-400 text-sm leading-relaxed font-light">
-              Infrastructure as a Service. Akses <em class="text-slate-200 not-italic">bare-metal</em> virtual dengan
-              kendali penuh atas OS, komputasi, dan jaringan.
-            </p>
           </div>
-        </div>
 
-        <!-- Card 2: PaaS -->
-        <div data-aos="fade-up" data-aos-delay="300"
-          class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-          <div>
-            <div class="mb-8 flex items-center justify-between">
-              <div
-                class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                </svg>
+          <!-- Card 2: PaaS -->
+          <div data-aos="fade-up" data-aos-delay="300"
+            class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+            <div>
+              <div class="mb-8 flex items-center justify-between">
+                <div
+                  class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
               </div>
-              <span
-                class="text-slate-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 text-base">↗</span>
+
+              <h3 class="text-lg font-medium text-white mb-3">PaaS (Platform as a Service)</h3>
+              <p class="text-slate-400 text-sm leading-relaxed font-light">
+                Layanan yang menyediakan lingkungan kerja komputasi khusus untuk tahap pengembangan. Pengguna tidak
+                perlu lagi mengelola infrastruktur perangkat keras dan sistem operasi dasar, sehingga dapat berfokus
+                sepenuhnya pada proses pembuatan, pengujian, dan perilisan aplikasi.
+              </p>
             </div>
-
-            <h3 class="text-lg font-medium text-white mb-2">PaaS</h3>
-            <p class="text-slate-400 text-sm leading-relaxed font-light">
-              Platform as a Service. Fokus penuh pada <em class="text-slate-200 not-italic">deployment</em> aplikasi
-              tanpa pusing memikirkan manajemen server.
-            </p>
           </div>
-        </div>
 
-        <!-- Card 3: SaaS -->
-        <div data-aos="fade-up" data-aos-delay="400"
-          class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-          <div>
-            <div class="mb-8 flex items-center justify-between">
-              <div
-                class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                  </path>
-                </svg>
+          <!-- Card 3: SaaS -->
+          <div data-aos="fade-up" data-aos-delay="400"
+            class="group relative bg-[#090d16]/50 backdrop-blur-md border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 rounded-xl p-8 flex flex-col justify-between h-full min-h-[260px] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+            <div>
+              <div class="mb-8 flex items-center justify-between">
+                <div
+                  class="p-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-white group-hover:border-white/30 transition-colors">
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                </div>
               </div>
-              <span
-                class="text-slate-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 text-base">↗</span>
+
+              <h3 class="text-lg font-medium text-white mb-3">SaaS (Software as a Service)</h3>
+              <p class="text-slate-400 text-sm leading-relaxed font-light">
+                Layanan berupa perangkat lunak jadi yang dapat diakses langsung menggunakan jaringan internet. Pengguna
+                hanya bertindak sebagai pemakai dan tidak perlu memikirkan proses instalasi, pemeliharaan sistem, maupun
+                pembaruan aplikasi secara teknis.
+              </p>
             </div>
-
-            <h3 class="text-lg font-medium text-white mb-2">SaaS</h3>
-            <p class="text-slate-400 text-sm leading-relaxed font-light">
-              Software as a Service. Solusi aplikasi siap pakai berskala global yang langsung dapat diakses via peramban
-              web.
-            </p>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </section>
@@ -1711,39 +1761,22 @@
                 class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
                   class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Karakteristik Utama</a>
             </li>
+            <li><a href="#keunggulan-cloud"
+                class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
+                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Keunggulan Cloud</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3 & 4 (Ringkasan struktur yang sama) -->
+        <div data-aos="fade-up" data-aos-delay="150">
+          <h4 class="text-white font-semibold mb-6 tracking-wide text-sm uppercase"></h4>
+          <ul class="space-y-4">
             <li><a href="#layanan"
                 class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 group"><span
                   class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-blue-400"></span>Model Layanan</a></li>
           </ul>
         </div>
 
-        <!-- Column 3 & 4 (Ringkasan struktur yang sama) -->
-        <div data-aos="fade-up" data-aos-delay="150">
-          <h4 class="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Developer</h4>
-          <ul class="space-y-4">
-            <li><a href="#"
-                class="text-sm text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-cyan-400"></span>Dokumentasi API</a></li>
-            <li><a href="#"
-                class="text-sm text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2 group"><span
-                  class="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-cyan-400"></span>Status Network</a></li>
-          </ul>
-        </div>
-
-        <div data-aos="fade-up" data-aos-delay="200">
-          <h4 class="text-white font-semibold mb-6 tracking-wide text-sm uppercase">Tech Newsletter</h4>
-          <form
-            class="flex items-center w-full bg-slate-900 border border-slate-700 rounded-lg overflow-hidden focus-within:border-blue-500">
-            <input type="email" placeholder="dev@example.com"
-              class="w-full bg-transparent text-sm text-white px-4 py-2.5 outline-none placeholder:text-slate-600 font-mono"
-              required />
-            <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5"><svg class="w-4 h-4"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
-                </path>
-              </svg></button>
-          </form>
-        </div>
       </div>
 
       <div class="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4">
